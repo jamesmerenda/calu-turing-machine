@@ -69,6 +69,27 @@ ul
 	text-decoration: underline;
 }
 
+.documentation
+{
+	list-style-type: none;
+	display: inline;
+}
+
+.documentation li:hover
+{
+	text-decoration: underline;
+}
+
+.documentation li
+{
+	display: block;
+	background-color: #b3562e;
+	height: 33.3%;
+	text-align: center;
+	color: white;
+	text-decoration: none;
+}
+
 .bottom-bar ul
 {
 	list-style-type: none;
