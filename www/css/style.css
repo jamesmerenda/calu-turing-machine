@@ -119,6 +119,18 @@ a:hover
 	list-style-type: none;
 }
 
+#gantt-chart
+{
+	text-decoration: none;
+	list-style-type: none;
+}
+
+#gantt-chart li iframe
+{
+	width: 99.5%;
+	height: 565px;
+}
+
 .bottom-bar ul
 {
 	list-style-type: none;
