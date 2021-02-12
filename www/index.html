@@ -2,8 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Birtualization of a Turing Machine - Home</title>
+	<title>Virtualization of a Turing Machine - Home</title>
 	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/machine.css"/>
 </head>
 <body>
 	<div class="wrapper">
@@ -19,7 +20,46 @@
 				</ul>
 			</span>
 			<div class="main">
-				<center><h1>Machine is Under Maintenance</h1></center>
+				<div class='options'>
+					<button class='option_buttons' id='toggle_layout'>Console Position</button>
+					<button class='option_buttons' id='toggle_console'>Toggle Console</button>
+					<button class='option_buttons' id='toggle_editor'>Toggle Editor</button>
+					<button class='option_buttons' id='toggle_machine'>Toggle Machine</button>
+				</div>
+					<div  class = 'editor' id='editor'>
+						<div class ='editor__buttons'>
+							<button class='editor__buttons' id='load'>Load Machine</button>
+							<button class='editor__buttons' id='select'>Select Pre-Made</button>
+							<input class='editor__buttons' type="file" id='upload'></input>
+						</div>
+						<div class ='editor__text'>
+							<textarea class='editor__text__line-numbers' id='line-numbers' placeholder='1' readonly="true"></textarea>
+							<textarea class='editor__text__code-area' id='code-area'spellcheck="false"></textarea>
+						</div>
+					</div>
+					<div class = 'console' id= 'console'>
+						<div class ='console__buttons'>
+							<button id='clear'>Clear Console</button>
+						</div>
+						<div class ='console__display'>
+							<textarea class='console__display' id='consoleText'readonly="true"></textarea>
+						</div>
+					</div>
+	
+				<div class='machine' id='machine'>
+					<div class='state_diagram'>
+						State Diagram
+					</div>
+					<div class='tape_view'>
+						Tape View
+					</div>
+					<div class='machine_buttons'>
+						<button class='machine_buttons' id='step'>Step</button>
+						<button class='machine_buttons' id='play'>Play</button>
+						<button class='machine_buttons' id='reset'>Reset</button>
+					</div>
+				</div>
+
 			</div>
 			<div class="bottom-bar">
 			<ul>
@@ -29,6 +69,7 @@
 			</div>
 		</div>
 	</div>
+	<script src="./scripts/app.js" type="module"></script>
 </body>
 
 </html>

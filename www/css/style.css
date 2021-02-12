@@ -47,6 +47,7 @@ a:hover
 
 .main
 {
+	position: absolute;
 	width: 100%;
 	height: 80%;
 	min-height: 600px;

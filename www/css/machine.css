@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+}
+
+.options {
+    position: absolute;
+    top:.1%;
+    bottom: 95%;
+    left:1%;
+    width: 98%;
+    display: flex;
+    flex-direction: row;
+    gap: .3%;
+    font-size: 12;
+}
+
+.option_buttons {
+    font-size:10px;
+    width: 90%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+
+.ide {
+    display: flex;
+    flex-direction: column;
+}
+
+.console {
+    position: absolute;
+    top: 79%;
+    bottom: 1%;
+    left: 1%;
+    right: 1%;
+    border: 1px solid black;
+    background-color:black;
+    padding-top: 3px;
+    padding-left: 1%;
+    padding-right: 1%;
+    display: flex;
+    flex-direction: column;
+}
+
+.console__display {
+    width: 100%;
+    height: 99%;
+    padding-top: .1%;
+    padding-bottom: .1%;
+    resize: none;
+}
+
+.editor {
+    position: absolute;
+    left: 1%;
+    top: 6%;
+    right: 50.5%;
+    bottom: 22%;
+    border: 1px solid black;
+    background-color: gray;
+    display: flex;
+    flex-direction: column; 
+}
+
+.editor__buttons {
+    display: flex;
+    font-size: 11px;
+    padding-top: .1%;
+}
+
+.editor__text {
+    padding-top: .5%;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: .5%;
+    border: 1px thin black;
+    height: 95%;
+}
+
+.editor__text__line-numbers {
+    font-weight: bolder;
+    text-align: right;
+    overflow:hidden;
+    word-wrap: normal;
+    width: 7%;
+    height: 100%;
+    background-color:lightgray;
+    border: 1px solid black;
+    resize: none;
+}
+
+.editor__text__code-area {
+    width: 91%;
+    height: 100%;
+    resize: none;
+    border: 1px solid black;
+    overflow-wrap:normal;
+    background-color:whitesmoke;
+}
+
+.machine {
+    position: absolute;
+    top: 6%;
+    left: 50.5%;
+    right: 1%;
+    bottom: 22%;
+    background-color: white;
+    border: 1px solid black;
+    padding: .3%;
+}
+
+.state_diagram {
+    border: 1px solid black;
+    border-bottom: none;
+    background-color: gray;
+    height: 70%;
+    width: 100%;
+}
+
+.tape_view {
+    height: 14%;
+    border: 1px solid black;
+    border-top: none;
+    background-color: gray;
+}
+ .machine_buttons {
+    padding-top: .1%;
+    gap: .3%;
+    height: 30px;
+}
