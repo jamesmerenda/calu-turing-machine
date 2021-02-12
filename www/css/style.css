@@ -35,7 +35,8 @@ a:hover
 .main-wrapper
 {
 	position: absolute;
-	width: 1080px;
+	width: 75%;
+	min-width: 1080px;
 	height: 100%;
 	top: 0;
 	left: 50%;
@@ -44,8 +45,11 @@ a:hover
 
 .main
 {
-	width: 1080px;
-	height: 600px;
+	width: 100%;
+	height: 80%;
+	min-height: 600px;
+	max-width: 1920px;
+	max-height: 1080px;
 	background-color: grey;
 	outline-color: #b3562e;
 	outline-width: 4px;
@@ -104,11 +108,13 @@ a:hover
 #reports-container
 {
 	float: left;
-	width: 350px;
+	width: 33.3%;
+	min-width: 350px;
+	max-width: 500px;
 	height: 241.8px;
-	padding: 5px;
 	display: block;
-	background-color: #b3562e;
+	padding-top: 20px;
+	/*background-color: #b3562e;*/
 	text-align: center;
 }
 
@@ -127,8 +133,9 @@ a:hover
 
 #gantt-chart li iframe
 {
+	position: absolute;
 	width: 99.5%;
-	height: 565px;
+	height: 95%;
 }
 
 .bottom-bar ul
@@ -151,4 +158,73 @@ a:hover
 	margin-left: 100px;
 	padding: 14.2px;
 
+}
+
+.read-head
+{
+	width: auto;
+	margin: 0;
+	position: absolute;
+	top: 37%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	color: black;
+	font-size: 28pt;
+}
+
+.t-machine
+{
+	width: 50%;
+	min-width: 540px;
+	max-width: 960px;
+	height: 25%;
+	min-height: 450px;
+	background-color: white;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.tape
+{
+	width: 100%;
+	height: 75px;
+	background-color: grey;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	white-space: nowrap;
+	overflow: hidden;
+	display: table;
+}
+
+.tape-cell
+{
+	position: absolute;
+	width: 11.11%;
+	height: 75px;
+	background-image: url(../imgs/cell.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	transition-timing-function: ease;
+}
+
+.cell-contents
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#test
+{
+	position: absolute;
+	left: 0%;
 }
