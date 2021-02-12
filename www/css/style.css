@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body
 {
 	font-family: DejaVu Sans Mono;
@@ -38,7 +42,10 @@ a:hover
 	position: absolute;
 	width: 75%;
 	min-width: 1080px;
+	max-width: 1920px;
 	height: 100%;
+	max-height: 1080px;
+	min-height: 734px;
 	top: 0;
 	left: 50%;
 	transform: translate(-50%,0%);
@@ -47,6 +54,7 @@ a:hover
 
 .main
 {
+	position: absolute;
 	width: 100%;
 	height: 80%;
 	min-height: 600px;
@@ -72,7 +80,7 @@ a:hover
 	display: inline-block;
 	padding: 5px;
 	padding-left: 15px; padding-right: 15px;
-	height: 20px;
+	height: 30px;
 	margin-top: 5px; margin-left: 10px;
 	text-decoration: none;
 	color: white;
@@ -149,15 +157,22 @@ a:hover
 	text-align: center;
 }
 
-.bottom-bar ul
+.bottom-bar
 {
-	list-style-type: none;
+	position: absolute;
 	width: 100%;
-	height: 50px;
+	height: 40px;
+	bottom: 5px;
 	background-color: #b3562e;
 	outline-color: #b3562e;
 	outline-width: 4px;
 	outline-style: outset;
+}
+
+.bottom-bar ul
+{
+	list-style-type: none;
+	margin-top: 10px;
 }
 
 .bottom-bar ul li
@@ -167,8 +182,7 @@ a:hover
 	text-decoration: none;
 	margin-right: 25px;
 	margin-left: 100px;
-	padding: 14.2px;
-
+	margin-bottom: 5px;
 }
 
 .read-head
