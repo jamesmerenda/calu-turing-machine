@@ -1,5 +1,3 @@
-import state from "./state.js";
-
 export default class machine {
     constructor(input, blank, start, accept, states_Set) {
         this.states = states_Set;
@@ -8,6 +6,6 @@ export default class machine {
         this.start = start;
         this.accept = accept;
         this.numStates = states_Set.length;
-        console.log(states_Set);
+        this.result = input;
     }
 }

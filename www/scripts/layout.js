@@ -161,15 +161,6 @@ export default class layout{
                 document.getElementById("machine").style.display = "";
                 document.getElementById("editor").style.right = "50.5%";
             }
-/*
-            if(this.layout == 0)
-            {
-                document.getElementById("ide").style.flexDirection = "column";
-                document.getElementById("editor").style.height = "80%";
-                document.getElementById("console").style.height = "19%";
-                this.layout = 1;
-            }
-*/
 
             this.machineShown = !this.machineShown;
         }
