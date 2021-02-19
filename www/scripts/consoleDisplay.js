@@ -76,11 +76,10 @@ export default class {
         for(let i = 0; i < machine.numStates;i++)
         {
             this.console.value += `${machine.states[i][0]}\n`;
-            for(let j= 1; j < machine.states[i].length;j++)
+            for(let j = 0; j < machine.states[i][1].length;j++)
             {
-                this.console.value += `\t${machine.states[i][j]}`;
+                this.console.value += `\t${machine.states[i][1][j]}\t${machine.states[i][2][j]}\n`;
             }
-            this.console.value += "\n";
         }
     }
 }

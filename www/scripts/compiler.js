@@ -282,6 +282,8 @@ export default class compiler {
                             this.states_Set[numStates] = tempState;
                             numStates++;
                             tempState = {undefined};
+                            this.potentialReads_Set = new Array();
+                            this.actions_Set = new Array();
                             addState = false;
                         }
                     }
@@ -311,7 +313,7 @@ export default class compiler {
                             {
                                 turingMachine = new machine(this.tempInputString, this.tempBlankString,this.tempStartStateString, this.tempAcceptStateString, this.states_Set);
                                 this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
-                                this.states_Set = {undefined};
+                                this.states_Set = new Array();
                             }
                             else{this.errorCode = -204;}//no states defined
                         }else{this.errorCode = -203;}//accept state not defined
