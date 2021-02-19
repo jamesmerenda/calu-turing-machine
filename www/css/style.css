@@ -237,7 +237,6 @@ a:hover
 	background-image: url(../imgs/cell.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
-	transition-timing-function: ease;
 }
 
 .cell-contents
@@ -247,10 +246,4 @@ a:hover
 	left: 50%;
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
-}
-
-#test
-{
-	position: absolute;
-	left: 0%;
 }

@@ -1,8 +1,6 @@
 <!--index page-->
 <!--
 to do:
-	loop tape
-	add ease animation (if possible)
 	pretty up the interface
 -->
 <!DOCTYPE html>
@@ -16,38 +14,38 @@ to do:
 		<div class="t-machine">
 			<div class="read-head">&#9660;</div>
 			<div class="tape">
-				<div id="10" class="tape-cell" style="left: -11.11%">
-					<div class="cell-contents">10</div>
-				</div>
-				<div id="0" class="tape-cell" style="left: 0%">
+				<div id="0" class="tape-cell" style="left: -11.11%; transition-duration: 1s;">
 					<div class="cell-contents">0</div>
 				</div>
-				<div id="1" class="tape-cell" style="left: 11.11%">
+				<div id="1" class="tape-cell" style="left: 0%; transition-duration: 1s;">
 					<div class="cell-contents">1</div>
 				</div>
-				<div id="2" class="tape-cell" style="left: 22.22%">
+				<div id="2" class="tape-cell" style="left: 11.11%; transition-duration: 1s;">
 					<div class="cell-contents">2</div>
 				</div>
-				<div id="3" class="tape-cell" style="left: 33.33%">
+				<div id="3" class="tape-cell" style="left: 22.22%; transition-duration: 1s;">
 					<div class="cell-contents">3</div>
 				</div>
-				<div id="4" class="tape-cell" style="left: 44.44%">
+				<div id="4" class="tape-cell" style="left: 33.33%; transition-duration: 1s;">
 					<div class="cell-contents">4</div>
 				</div>
-				<div id="5" class="tape-cell" style="left: 55.55%">
+				<div id="5" class="tape-cell" style="left: 44.44%; transition-duration: 1s;">
 					<div class="cell-contents">5</div>
 				</div>
-				<div id="6" class="tape-cell" style="left: 66.66%">
+				<div id="6" class="tape-cell" style="left: 55.55%; transition-duration: 1s;">
 					<div class="cell-contents">6</div>
 				</div>
-				<div id="7" class="tape-cell" style="left: 77.77%">
+				<div id="7" class="tape-cell" style="left: 66.66%; transition-duration: 1s;">
 					<div class="cell-contents">7</div>
 				</div>
-				<div id="8" class="tape-cell" style="left: 88.88%">
+				<div id="8" class="tape-cell" style="left: 77.77%; transition-duration: 1s;">
 					<div class="cell-contents">8</div>
 				</div>
-				<div id="9" class="tape-cell" style="left: 99.99%">
+				<div id="9" class="tape-cell" style="left: 88.88%; transition-duration: 1s;">
 					<div class="cell-contents">9</div>
+				</div>
+				<div id="10" class="tape-cell" style="left: 99.99%; transition-duration: 1s;">
+					<div class="cell-contents">10</div>
 				</div>
 			</div>
 
@@ -56,6 +54,10 @@ to do:
 			<button>pause</button>
 			<button onclick="moveLeft()">left</button>
 			<button onclick="moveRight()">right</button>
+			<br><br>
+			<div style="color:black">Speed:
+			<input id="speedSelector" onload="setDefaultSpeed()" type="range" min="10" max="70" value="40">
+			</div>
 		</div>
 	</div>
 </body>
@@ -63,9 +65,16 @@ to do:
 <script type="text/javascript">
 	var cell = [document.getElementById('0'),document.getElementById('1'),document.getElementById('2'),document.getElementById('3'),document.getElementById('4'),document.getElementById('5'),document.getElementById('6'),document.getElementById('7'),document.getElementById('8'),document.getElementById('9'),document.getElementById('10')];
 
+	var tapeIndex = 5;	//cell in the middle on load
+	var tapeContents = [];
+
 	var basecellpos = [];
-	var cellpos = []
-	for(var i=0;i<cell.length;i++)
+	var cellpos = [];
+
+	var speedSelector = document.getElementById("speedSelector");
+	var desiredSpeed = parseInt(speedSelector.value)/100 + 's';
+
+	for(let i=0;i<cell.length;i++)
 	{
 		basecellpos[i] = parseFloat(cell[i].style.left);
 		cellpos[i] = parseFloat(cell[i].style.left);
@@ -73,39 +82,65 @@ to do:
 
 	function moveRight()
 	{
-		for(var i=cell.length-1;i>=0;--i)
+		for(let i=cell.length-1;i>=0;--i)
 		{
 			let pos = 0;
+			cell[i].style.transitionDuration = desiredSpeed;
+
 			pos = parseFloat(cellpos[i]) - 11.11 + '%';
-			cell[i].style.left = pos;
+			if(parseFloat(pos) < -11.11)
+			{
+				cell[i].style.transitionDuration = '0s';
+				pos = '99.99%';
+				cell[i].style.left = pos;
+			} else {
+				cell[i].style.left = pos;
+			}
+			
 			cellpos[i] = pos;
-			//console.log(cell[i].style.left,pos);
-			//add condition to loop divs to appropriate side
 		}
 	}
 
 	function moveLeft()
 	{
 		
-		for(var i=0;i<cell.length;++i)
+		for(let i=0;i<cell.length;++i)
 		{
 			let pos = 0;
+			cell[i].style.transitionDuration = desiredSpeed;
+
 			pos = parseFloat(cellpos[i]) + 11.11 + '%';
-			cell[i].style.left = pos;
+			if(parseFloat(pos) > 99.99)
+			{
+				cell[i].style.transitionDuration = '0s';
+				pos = '-11.11%';
+				cell[i].style.left = pos;
+			} else {
+				cell[i].style.left = pos;
+			}
+
 			cellpos[i] = pos;
-			//console.log(cell[i].style.left,pos);
-			//add condition to loop divs to appropriate side
 		}
 	}
 
 	function resetPos()
 	{
-		for(var i=0;i<cell.length;++i)
+		for(let i=0;i<cell.length;++i)
 		{
 			let pos = 0;
 			pos = parseFloat(basecellpos[i]) + '%';
 			cellpos[i] = basecellpos[i];
 			cell[i].style.left = pos;
+		}
+	}
+
+	speedSelector.oninput = function() {
+		speedSelectorValue = (parseInt(this.value) / 100);
+		for(let i=0;i<cell.length;i++)
+		{
+			cell[i].style.transitionDuration = speedSelectorValue + 's';
+			desiredSpeed = speedSelectorValue + 's';
+			//console.log(desiredSpeed);
 		}
 	}
 
