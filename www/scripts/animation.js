@@ -10,9 +10,6 @@ var cell = [document.getElementById('0'),
 			document.getElementById('9'),
 			document.getElementById('10')];
 
-var tapeIndex = 5;	//cell in the middle on load
-var tapeContents = [];
-
 var basecellpos = [];
 var cellpos = [];
 
@@ -80,7 +77,7 @@ function resetPos()
 }
 
 speedSelector.oninput = function() {
-	speedSelectorValue = (parseInt(this.value) / 100);
+	var speedSelectorValue = (parseInt(this.value) / 100);
 	for(let i=0;i<cell.length;i++)
 	{
 		cell[i].style.transitionDuration = speedSelectorValue + 's';
