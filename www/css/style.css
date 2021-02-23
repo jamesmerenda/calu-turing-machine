@@ -169,49 +169,27 @@ a:hover
 	outline-style: outset;
 }
 
-.bottom-bar ul
-{
-	list-style-type: none;
-	margin-top: 10px;
-}
-
-.bottom-bar ul li
-{ 
-	float: left;
-	display: inline; 
-	text-decoration: none;
-	margin-right: 25px;
-	margin-left: 100px;
-	margin-bottom: 5px;
-}
-
 .read-head
 {
 	width: auto;
 	margin: 0;
 	position: absolute;
-	top: 37%;
+	top: 22%;
 	left: 50%;
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 	color: black;
-	font-size: 28pt;
+	font-size: 26pt;
 }
 
 .t-machine
 {
-	width: 50%;
-	min-width: 540px;
-	max-width: 960px;
-	height: 25%;
-	min-height: 450px;
+	width: 100%;
+	height: 100%;
 	background-color: white;
 	margin: 0;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	-ms-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
+	position: relative;
+	padding-left: 2px;
 }
 
 .tape
@@ -221,7 +199,7 @@ a:hover
 	background-color: grey;
 	position: absolute;
 	top: 50%;
-	left: 50%;
+	left: 50.03%;
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 	white-space: nowrap;
@@ -243,6 +221,16 @@ a:hover
 {
 	position: absolute;
 	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+}
+
+#speedSelector
+{
+	direction: rtl;
+	position: absolute;
+	top: 80%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);

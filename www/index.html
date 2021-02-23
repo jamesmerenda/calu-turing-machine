@@ -20,7 +20,7 @@
 				</ul>
 			</span>
 			<div class="main">
-				<input type="text" id="tempFile" class="someClass" value="" name="fileWrite"/>
+				<!--<input type="text" id="tempFile" class="someClass" value="" name="fileWrite"/>-->
 				<div class='options'>
 					<button class='option_buttons' id='toggle_layout'>Console Position</button>
 					<button class='option_buttons' id='toggle_console'>Toggle Console</button>
@@ -52,25 +52,73 @@
 						State Diagram
 					</div>
 					<div class='tape_view'>
-						Tape View
+						<div class="t-machine">
+							<center>
+								<input type="text" id="tapeInput" placeholder="Enter tape input here."/>
+								<button id='enterInput'>Enter Input</button>
+							</center>
+							<div class="read-head">&#9660;</div>
+							<div class="tape">
+								<div id="0" class="tape-cell" style="left: -11.11%; transition-duration: 1s;">
+									<div class="cell-contents"></div>
+								</div>
+								<div id="1" class="tape-cell" style="left: 0%; transition-duration: 1s;">
+									<div class="cell-contents"></div>
+								</div>
+								<div id="2" class="tape-cell" style="left: 11.11%; transition-duration: 1s;">
+									<div class="cell-contents"></div>
+								</div>
+								<div id="3" class="tape-cell" style="left: 22.22%; transition-duration: 1s;">
+									<div class="cell-contents"></div>
+								</div>
+								<div id="4" class="tape-cell" style="left: 33.33%; transition-duration: 1s;">
+									<div class="cell-contents"></div>
+								</div>
+								<div id="5" class="tape-cell" style="left: 44.44%; transition-duration: 1s;">
+									<div class="cell-contents"></div>
+								</div>
+								<div id="6" class="tape-cell" style="left: 55.55%; transition-duration: 1s;">
+									<div class="cell-contents"></div>
+								</div>
+								<div id="7" class="tape-cell" style="left: 66.66%; transition-duration: 1s;">
+									<div class="cell-contents"></div>
+								</div>
+								<div id="8" class="tape-cell" style="left: 77.77%; transition-duration: 1s;">
+									<div class="cell-contents"></div>
+								</div>
+								<div id="9" class="tape-cell" style="left: 88.88%; transition-duration: 1s;">
+									<div class="cell-contents"></div>
+								</div>
+								<div id="10" class="tape-cell" style="left: 99.99%; transition-duration: 1s;">
+									<div class="cell-contents"></div>
+								</div>
+							</div>
+							<div>
+							<input id="speedSelector" onload="setDefaultSpeed()" type="range" min="0" max="70" value="35"/>
+							</div>
+						</div>
 					</div>
 					<div class='machine_buttons'>
 						<button class='machine_buttons' id='step'>Step</button>
 						<button class='machine_buttons' id='play'>Play</button>
 						<button class='machine_buttons' id='reset'>Reset</button>
+						<button onclick="resetPos()">reset</button>
+							<button>start</button>
+							<button>pause</button>
+							<button id="left" onclick="moveLeft()">left</button>
+							<button id="right" onclick="moveRight()" style="display: none;">right</button>
 					</div>
 				</div>
 			</div>
 			<div class="bottom-bar">
-				<ul>
-					<li>Authored in Cooperation by: Brett George, Jisue Lee, James Merenda</li>
-					<li>Last Update: Feb-2021</li>
-				</ul>
+					<div style="float: left; margin-left:20px;margin-top:7px;">Authored in Cooperation by: Brett George, Jisue Lee, James Merenda</div>
+					<div style="float: right; margin-right:20px;margin-top:7px;">Last Update: Feb-2021</div>
 			</div>
 		</div>
 	</div>
 	<script src="scripts/app.js" type="module"></script>
-	<
+	<script type="text/javascript" src="scripts/animation.js"></script>
+	<script type="text/javascript" src="scripts/interpreter.js"></script>
 </body>
 
 </html>
