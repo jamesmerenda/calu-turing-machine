@@ -12,30 +12,76 @@ var cell = [document.getElementById('0'),
 
 var viewedValues = ['','','','','','','','','','',''];
 var tapeValues = [];
-var tapeIndex = 5;
 var tapeInput;
+var beginningOfTape;
+var tapeValuesOffset = 0;
 
 var inputButton = document.getElementById('enterInput');
 
-var step = document.getElementById('step');
+//document.getElementById("left").addEventListener();
+//document.getElementById("right").addEventListener();
+//document.getElementById("reset").addEventListener();
 
 inputButton.onclick = function() {
+	//add check to see if input already exists or keep it like this
+	tapeValues.splice("",tapeValues.length);
+	resetPos();
+	//moveLeft();
 	let inputIndex = 0;
 	tapeInput = document.getElementById('tapeInput').value;
 
-	tapeValues.splice(0,tapeValues.length);
 	for(let i=0;i<tapeInput.length;++i)
 	{
-		//cell[i].childNodes[1].innerHTML = tapeInput[inputIndex];
-		//viewedValues[i] = tapeInput[inputIndex];
+		if(i + 5 < viewedValues.length)
+		{
+			viewedValues[i+5] = tapeInput[i];
+		}
 		tapeValues.push(tapeInput[i]);
-		//console.log(tapeValues);
 	}
+	console.log(viewedValues);
+	console.log(tapeValues);
 
-	//call mapViewedTapeValues()
+	mapViewedTapeValues();
 }
 
 function mapViewedTapeValues() 
+{
+	beginningOfTape = getBeginningOfTape();
+	let currentCell = beginningOfTape;
+	//enter values to cells
+	console.log(currentCell);
+	for(let i=0;i<viewedValues.length;++i)
+	{
+		if(currentCell > 10)
+		{
+			currentCell = 0;
+		} 
+		cell[currentCell].childNodes[1].innerHTML = viewedValues[i];
+		currentCell++;
+	}
+
+	
+}
+
+function getBeginningOfTape()
+{
+	let winner = '999%';
+	let leftmostCell;
+	for(let i=0;i<11;++i)
+	{
+		if(parseFloat(cell[i].style.left) < parseFloat(winner))
+		{
+			winner = cell[i].style.left;
+			leftmostCell = i;
+		}
+	}
+
+	console.log(leftmostCell);
+
+	return leftmostCell;
+}
+
+function calculateViewableTapeValues()
 {
 
 }
