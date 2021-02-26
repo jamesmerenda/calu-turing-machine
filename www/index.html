@@ -102,23 +102,21 @@
 						<button class='machine_buttons' id='step'>Step</button>
 						<button class='machine_buttons' id='play'>Play</button>
 						<button class='machine_buttons' id='reset'>Reset</button>
-						<button id='resetpos' onclick="resetPos()">reset</button>
-							<button>start</button>
-							<button>pause</button>
-							<button id="left" onclick="moveLeft()">left</button>
-							<button id="right" onclick="moveRight()" style="display:;">right</button>
+						<button id='resetposbtn' onclick="resetPos()">reset</button>
+							<button id="moveleftbtn" onclick="moveLeft()">left</button>
+							<button id="moverightbtn" onclick="moveRight()" style="display:;">right</button>
 					</div>
 				</div>
 			</div>
 			<div class="bottom-bar">
-					<div style="float: left; margin-left:20px;margin-top:7px;">Authored in Cooperation by: Brett George, Jisue Lee, James Merenda</div>
-					<div style="float: right; margin-right:20px;margin-top:7px;">Last Update: Feb-2021</div>
+				<div style="float: left; margin-left:20px;margin-top:7px;">Authored in Cooperation by: Brett George, Jisue Lee, James Merenda</div>
+				<div style="float: right; margin-right:20px;margin-top:7px;">Last Update: Feb-2021</div>
 			</div>
 		</div>
 	</div>
 	<script src="scripts/app.js" type="module"></script>
 	<script type="text/javascript" src="scripts/animation.js"></script>
-	<script type="text/javascript" src="scripts/interpreter.js"></script>
+	<script type="text/javascript" src="scripts/mapper.js"></script>
 </body>
 
 </html>

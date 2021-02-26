@@ -17,16 +17,14 @@ var beginningOfTape;
 var tapeValuesOffset = 0;
 
 var inputButton = document.getElementById('enterInput');
-
-//document.getElementById("left").addEventListener();
-//document.getElementById("right").addEventListener();
-//document.getElementById("reset").addEventListener();
+document.getElementById('moverightbtn').addEventListener('click', function(){tapeValuesOffset++;calculateViewableTapeValues();});
+document.getElementById('moveleftbtn').addEventListener('click', function(){tapeValuesOffset--;calculateViewableTapeValues();});
+document.getElementById('resetposbtn').addEventListener('click', function(){tapeValuesOffset = 0;calculateViewableTapeValues();});
 
 inputButton.onclick = function() {
 	//add check to see if input already exists or keep it like this
 	tapeValues.splice("",tapeValues.length);
 	resetPos();
-	//moveLeft();
 	let inputIndex = 0;
 	tapeInput = document.getElementById('tapeInput').value;
 
@@ -38,8 +36,6 @@ inputButton.onclick = function() {
 		}
 		tapeValues.push(tapeInput[i]);
 	}
-	console.log(viewedValues);
-	console.log(tapeValues);
 
 	mapViewedTapeValues();
 }
@@ -48,19 +44,12 @@ function mapViewedTapeValues()
 {
 	beginningOfTape = getBeginningOfTape();
 	let currentCell = beginningOfTape;
-	//enter values to cells
-	console.log(currentCell);
+
+	//map values to tape
 	for(let i=0;i<viewedValues.length;++i)
 	{
-		if(currentCell > 10)
-		{
-			currentCell = 0;
-		} 
-		cell[currentCell].childNodes[1].innerHTML = viewedValues[i];
-		currentCell++;
+		cell[i].childNodes[1].innerHTML = viewedValues[i];
 	}
-
-	
 }
 
 function getBeginningOfTape()
@@ -76,7 +65,7 @@ function getBeginningOfTape()
 		}
 	}
 
-	console.log(leftmostCell);
+	//console.log(leftmostCell);
 
 	return leftmostCell;
 }
@@ -84,4 +73,11 @@ function getBeginningOfTape()
 function calculateViewableTapeValues()
 {
 
+	//for(let i=0;i<tapeValues.length;++i)
+	//{
+	//	viewedValues[(i + 5 - (tapeValuesOffset))] = tapeInput[i];
+	//}
+
+	//console.log(viewedValues);
+	//mapViewedTapeValues();
 }
