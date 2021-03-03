@@ -228,12 +228,42 @@ a:hover
 	-ms-transform: translate(-50%, -50%);
 }
 
+.speedSelectorBounds
+{
+	position: absolute;
+	width: 100%;
+	color: black;
+	top: 83%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+}
+
 #speedSelector
 {
 	direction: rtl;
 	position: absolute;
-	top: 80%;
+	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
+}
+
+#slowLabel, #fastLabel
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+}
+
+#slowLabel
+{
+	left: 31%;
+}
+
+#fastLabel
+{
+	left: 69%;
 }
