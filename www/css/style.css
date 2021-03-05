@@ -233,7 +233,7 @@ a:hover
 	position: absolute;
 	width: 100%;
 	color: black;
-	top: 83%;
+	top: 80%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
@@ -249,7 +249,7 @@ a:hover
 	-ms-transform: translate(-50%, -50%);
 }
 
-#slowLabel, #fastLabel
+#slowLabel, #fastLabel, #currentSpeed
 {
 	position: absolute;
 	top: 50%;
@@ -266,4 +266,10 @@ a:hover
 #fastLabel
 {
 	left: 69%;
+}
+
+#currentSpeed
+{
+	transform: translate(-50%, 70%);
+	-ms-transform: translate(-50%, 70%);
 }

@@ -135,9 +135,10 @@ function findEnd()
 	return endCell;
 }
 
-//get user-selected speed from slider
+//get user-selected speed from slider and post value in seconds below slider
 speedSelector.oninput = function() {
 	var speedSelectorValue = (parseInt(this.value) / 100);
+	document.getElementById('currentSpeed').innerHTML = speedSelectorValue + ' s';
 	for(let i=0;i<cell.length;i++)
 	{
 		cell[i].style.transitionDuration = speedSelectorValue + 's';
