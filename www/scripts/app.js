@@ -26,4 +26,6 @@ markupCompiler.loadCode = function () {
     {
         machineConsole.displayMachine(machine);
     }
+	
+	machine.seekTransition();
 };
