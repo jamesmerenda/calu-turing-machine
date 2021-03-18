@@ -21,7 +21,7 @@ export default class machine {
 
 	playMachine()
 	{
-		while(this.findTransition() != 1);
+		while(this.findTransition() == -1);
 		console.log("done stepping through");
 	}
 
@@ -46,9 +46,8 @@ export default class machine {
 					console.log("about to transition");
 					this.performTransition(currentState[TRANSITIONSTEPS][i], this.result);
 					currentRead = this.result[this.readHeadIndex];
-					currentState = this.currentState;
 					i=currentState[POTENTIALREADS].length +1;
-					updateTape(this.result);
+					mapInput(this.result);
 				}
 
 
@@ -60,6 +59,7 @@ export default class machine {
 
 		if(currentState[STATENAME] == this.accept)//is the machine done?
 		{
+			console.log(currentState);
 			return 1;//yes
 		}
 		else
