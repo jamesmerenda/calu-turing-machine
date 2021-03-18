@@ -1,4 +1,5 @@
 import machine from "./machine.js";
+import "./mapper.js";
 
 export default class compiler {
     constructor() {
@@ -311,6 +312,7 @@ export default class compiler {
                         if(this.tempAcceptStateString != ""){
                             if(this.states_Set[0] != undefined)
                             {
+                                updateTape(this.tempInputString);
                                 turingMachine = new machine(this.tempInputString, this.tempBlankString,this.tempStartStateString, this.tempAcceptStateString, this.states_Set);
                                 this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
                                 this.states_Set = new Array();
@@ -440,10 +442,10 @@ export default class compiler {
                     if(this.nextStateAction_RegEx.test(this.tokens[index+5]) && this.ActionSetEnd_RegEx.test(this.tokens[index+6]))
                     {
                         if(this.tokens[index+1].includes("\"") || this.tokens[index+1].includes("\'"))
-                        {tempActionsString += this.tokens[index+1][1] + ":";}
-                        else{tempActionsString += this.tokens[index+1] + ":";}
+                        {tempActionsString += this.tokens[index+1][1] + "\n";}
+                        else{tempActionsString += this.tokens[index+1] + "\n";}
 
-                        tempActionsString += this.tokens[index+3] + ":";
+                        tempActionsString += this.tokens[index+3] + "\n";
                         tempActionsString += this.tokens[index+5];
                         this.actions_Set.push(tempActionsString);
                         returnVal = 2;
@@ -455,7 +457,7 @@ export default class compiler {
                 }
                 else if(this.directionAction_RegEx.test(this.tokens[index+1]) && this.nextStateAction_RegEx.test(this.tokens[index+3]) && this.ActionSetEnd_RegEx.test(this.tokens[index+4]))
                 {
-                    tempActionsString += this.tokens[index+1] + ":";
+                    tempActionsString += this.tokens[index+1] + "\n";
                     tempActionsString += this.tokens[index+3];
                     this.actions_Set.push(tempActionsString);
                     returnVal = 2;

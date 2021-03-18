@@ -71,7 +71,6 @@ export default class {
     displayMachine(machine)
     {
         this.console.value =`i: ${machine.input}\nb: ${machine.blank}\ns: ${machine.start}\na: ${machine.accept}\n`;
-        console.log(machine.numStates);
 
         for(let i = 0; i < machine.numStates;i++)
         {

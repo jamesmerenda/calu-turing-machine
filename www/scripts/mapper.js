@@ -61,3 +61,16 @@ inputButton.onclick = function() {
 		}
 	}
 }
+
+function updateTape(updatedTape)
+{
+	console.log(updatedTape);
+	tapeBeginning = findBeginning();
+	for(let i=tapeBeginning+5;i<cell.length;++i)
+	{
+		if(updatedTape[i-(tapeBeginning+5)] != undefined)
+		{
+			cell[i].querySelector('.cell-contents').innerHTML = updatedTape[i-(tapeBeginning+5)];
+		}
+	}
+}
