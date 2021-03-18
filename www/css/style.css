@@ -183,15 +183,37 @@ a:hover
 
 .read-head
 {
-	width: auto;
+	width: 0;
+	height: 0;
 	margin: 0;
 	position: absolute;
-	top: 22%;
+	top: 26%;
 	left: 50%;
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
-	color: black;
-	font-size: 26pt;
+	border-left: 25px ridge transparent;
+	border-right: 25px ridge transparent;
+	border-top: 10px ridge red;
+}
+
+.read-head-indicator
+{
+	margin: 0;
+	position: absolute;
+	top: 13%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	width: auto;
+	max-width: 100%;
+	height: 35px;
+	overflow: hidden;
+	padding-left: 20px;
+	padding-right: 20px;
+	background-color: black;
+	border-style: groove;
+	border-width: 6px;
+	border-color: grey;
 }
 
 /*github, update this stuff*/
@@ -325,4 +347,23 @@ a:hover
 	outline-width: 4px;
 	outline-style: inset;
 	text-align: center;
+}
+
+.tutorial-wrapper
+{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	opacity: 60%;
+	display: none;
+}
+
+.tool-tip
+{
+	position: absolute;
+	width: 100%;
+	height: 40%;
+	background-color: black;
+	opacity: 99%;
 }

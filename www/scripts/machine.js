@@ -12,10 +12,13 @@ export default class machine {
         {
             this.states[i] = new Array(states_Set[i][0], states_Set[i][1], states_Set[i][2]);
         }
+
     }
+
+
 	
 	seekTransition() { //look for the transition to perform based on current state and value
-	
+		
 		//descriptors for looking through state array
 		const STATENAME = 0; //ex [0][0] "start"
 		const CURRSTATEVAL = 1; //ex [0][1] "0"
