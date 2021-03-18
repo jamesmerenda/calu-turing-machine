@@ -35,23 +35,18 @@ var cell = [document.getElementById('0'),document.getElementById('1'),document.g
 			document.getElementById('98'),document.getElementById('99'),document.getElementById('100')
 			];
 
-var tapeInput;
-var inputButton = document.getElementById('enterInput');
-//get current beginning of viewable cells
-var tapeBeginning = findBeginning();
-
-inputButton.onclick = function() {
+function mapInput(input) {
 	//reset cells to default positions
 	resetPos();
 	//reset beginning of tape var
-	tapeBeginning = findBeginning()
+	let tapeBeginning = findBeginning()
 	//clear contents from cells
 	for(let i=0;i<cell.length;++i)
 	{
 		cell[i].querySelector('.cell-contents').innerHTML = '';
 	}
-	//get values inputted from user
-	tapeInput = document.getElementById('tapeInput').value;
+	//get input from user
+	tapeInput = input;
 	//write values from input to cells from middle cell
 	for(let i=tapeBeginning+5;i<cell.length;++i)
 	{
