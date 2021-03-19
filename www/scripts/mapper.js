@@ -35,9 +35,10 @@ var cell = [document.getElementById('0'),document.getElementById('1'),document.g
 			document.getElementById('98'),document.getElementById('99'),document.getElementById('100')
 			];
 
+/*
 function mapInput(input) {
 	//reset cells to default positions
-	resetPos();
+	//resetPos();
 	//reset beginning of tape var
 	let tapeBeginning = findBeginning()
 	//clear contents from cells
@@ -56,11 +57,25 @@ function mapInput(input) {
 		}
 	}
 }
+*/
+
+function updateCell(result)
+{
+	let cellUnderHead = findBeginning() + 5;
+	cell[cellUnderHead].querySelector('.cell-contents').innerHTML = result;
+}
 
 function updateTape(updatedTape)
 {
 	console.log(updatedTape);
-	tapeBeginning = findBeginning();
+	//reset cells to default positions
+	resetPos();
+	//clear contents from cells
+	for(let i=0;i<cell.length;++i)
+	{
+		cell[i].querySelector('.cell-contents').innerHTML = '';
+	}
+	let tapeBeginning = findBeginning();
 	for(let i=tapeBeginning+5;i<cell.length;++i)
 	{
 		if(updatedTape[i-(tapeBeginning+5)] != undefined)

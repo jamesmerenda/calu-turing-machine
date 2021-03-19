@@ -36,11 +36,10 @@ var cell = [document.getElementById('0'),document.getElementById('1'),document.g
 
 var basecellpos = [];
 var cellpos = [];
-var tapeBeginning = findBeginning();
-var tapeEnd = findEnd();
 
 var speedSelector = document.getElementById("speedSelector");
-var desiredSpeed = parseInt(speedSelector.value)/100 + 's';
+var desiredSpeedRaw = parseInt(speedSelector.value)/100;
+var desiredSpeed = desiredSpeedRaw + 's';
 var displaySpeed = desiredSpeed;
 
 for(let i=0;i<cell.length;i++)
@@ -52,12 +51,12 @@ for(let i=0;i<cell.length;i++)
 
 function moveRight()
 {
-	tapeBeginning = findBeginning();
-	tapeEnd = findEnd();
+	let tapeBeginning = findBeginning();
+	let tapeEnd = findEnd();
 
 	if(tapeEnd != 100)
 	{
-		for(let i=tapeEnd;i>=tapeBeginning;--i)
+		for(let i=tapeEnd;i>tapeBeginning;--i)
 		{
 			let pos = parseFloat(cellpos[i]) - 11.11 + '%';
 			cell[i].style.left = pos;
@@ -71,8 +70,8 @@ function moveRight()
 
 function moveLeft()
 {
-	tapeBeginning = findBeginning();
-	tapeEnd = findEnd();
+	let tapeBeginning = findBeginning();
+	let tapeEnd = findEnd();
 	//console.log(tapeEnd);
 
 	if(tapeEnd != 0)
@@ -133,6 +132,11 @@ function findEnd()
 	endCell += 1;
 
 	return endCell;
+}
+
+function getSpeed()
+{
+	return desiredSpeedRaw;
 }
 
 //get user-selected speed from slider and post value in seconds below slider

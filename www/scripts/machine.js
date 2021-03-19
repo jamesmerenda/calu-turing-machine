@@ -15,17 +15,25 @@ export default class machine {
             this.states[i] = new Array(states_Set[i][0], states_Set[i][1], states_Set[i][2]);
         }
 		this.currentState = this.findState(this.start);
+		this.playback;
 		document.getElementById('step').addEventListener('click', () => this.findTransition());
 		document.getElementById('play').addEventListener('click', () => this.playMachine());
+		document.getElementById('pause').addEventListener('click', () => this.stopTheBus());
     }
 
 	playMachine()
 	{
-		while(this.findTransition() == -1);
-		console.log("done stepping through");
+		//need to update transition speed in real time
+		this.playback = setInterval(function(){
+			document.getElementById('step').click();
+			//console.log(desiredSpeedRaw*1000);
+		}, desiredSpeedRaw*1000);
 	}
 
-
+	stopTheBus()	//I mean, stop the machine...
+	{
+		clearInterval(this.playback);
+	}
 
 	findTransition() {
 		//descriptors for looking through state array
@@ -47,7 +55,6 @@ export default class machine {
 					this.performTransition(currentState[TRANSITIONSTEPS][i], this.result);
 					currentRead = this.result[this.readHeadIndex];
 					i=currentState[POTENTIALREADS].length +1;
-					mapInput(this.result);
 				}
 
 
@@ -59,11 +66,10 @@ export default class machine {
 
 		if(currentState[STATENAME] == this.accept)//is the machine done?
 		{
-			console.log(currentState);
-			return 1;//yes
+			clearInterval(this.playback);
 		}
-		else
-			return -1;//no
+
+		
 	}
 
 	performTransition(transitionSteps, readString)
@@ -95,22 +101,31 @@ export default class machine {
 		}
 
 		this.result = readString;
+		//console.log(this.result[this.readHeadIndex]);
+		updateCell(this.result[this.readHeadIndex]);
+
 		if(direction == "r")//need to visually move the read head to the right
 		{
+
+			moveRight();
 			this.readHeadIndex++;
-			//moveRight();
+			//document.getElementById('moverightbtn').click();
+			
 		}
-		else//need to visually move the read head to the left
+		if(direction == "l")//need to visually move the read head to the left
 		{
+			moveLeft();
 			this.readHeadIndex--;
-			//moveLeft();
+			//document.getElementById('moveleftbtn').click();
+			
 		}
 		this.currentState = this.findState(nextState);
 	}
 
 	findState(stateName)
 	{
-		console.log(stateName);
+		//console.log(stateName);
+		document.querySelector('.read-head-indicator').innerHTML = stateName;
 		let i = 0;
 		while(i < this.states.length && stateName != this.states[i][0])
 		{
