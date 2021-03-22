@@ -1,34 +1,30 @@
 import machine from "./machine.js";
 import "./mapper.js";
+import errorHandler from "./errorHandler.js";
 
 export default class compiler {
+	
+	//various regex combos
+	SINGLE_CHAR_TOKENS = /-|=|;|,|\[|\]/;
+	LOOK_AHEAD_TOKENS = /'|"/;
+	WHITESPACE_TOKENS = /\s/;
+	
+	inputIdentifier_RegEx = /input/;
+	inputString_RegEx = /("|').+("|')/;
+	blankString_RegEx = /("|').("|')/;
+	startOrAcceptState_RegEx = /.+/;
+
+	stateName_RegEx = /\S+/;
+	potentialRead_RegEx = /('|").('|")/;
+	writeAction_RegEx = /(^.$)|(("|').("|'))/;
+	directionAction_RegEx = /(r|l)/;
+	nextStateAction_RegEx = /\S+/;
+	ActionSetStart_RegEx = /\[/;
+	ActionSetEnd_RegEx = /\]/;
+	
     constructor() {
-
-        this.SINGLE_CHAR_TOKENS = /-|=|;|,|\[|\]/;
-        this.LOOK_AHEAD_TOKENS = /'|"/;
-        this.WHITESPACE_TOKENS = /\s/;
-        this.SEMICOLON = ";";
-        this.assignment_RegEx = /=/;
-        this.endStatement_RegEx = /;/;
-        this.comma_RegEx = /,/;
-
-        this.inputIdentifier_RegEx = /input/;
-        this.inputString_RegEx = /("|').+("|')/;
-
-
-        this.blankString_RegEx = /("|').("|')/;
-
-        this.startOrAcceptState_RegEx = /.+/;
-        this.stateIdentifier_RegEx = /-/;
-
-        this.stateName_RegEx = /\S+/;
-        this.potentialRead_RegEx = /('|").('|")/;
-        this.writeAction_RegEx = /(^.$)|(("|').("|'))/;
-        this.directionAction_RegEx = /(r|l)/;
-        this.nextStateAction_RegEx = /\S+/;
-        this.ActionSetStart_RegEx = /\[/;
-        this.ActionSetEnd_RegEx = /\]/;
-
+		this.errorHandler = new errorHandler();
+		
         this.numTokens = 0;
         this.tokens = new Array();
 
@@ -46,34 +42,11 @@ export default class compiler {
         this.errorSymbol = "";
 
         this.userCode = undefined;
-        
         this.loadCode = undefined;
         document.getElementById('load').addEventListener('click', () => this.loadCode());
     }
 
-    getErrorCode() {
-        return this.errorCode;
-    }
-
-    getErrorState() {
-        return this.errorState;
-    }
-
-    getErrorSymbol() {
-        return this.errorSymbol;
-    }
-
-    setErrorContext() {
-        this.errorCode = this.tempErrorCode;
-        this.errorState = this.tempStateName;
-        this.errorSymbol = this.tempPotentialReadsString;
-    }
-
-    getErrorContext() {
-        return new Array(this.errorState, this.errorSymbol);
-    }
-
-    scanTokens()
+    scanTokens() //looking for tokens
     {
         let code = this.userCode.toLowerCase();
         let numTokens = 0;
@@ -87,7 +60,7 @@ export default class compiler {
 
         while(index < code.length && !stopScan)
         {
-            if(this.SINGLE_CHAR_TOKENS.test(code[index]))
+            if(this.SINGLE_CHAR_TOKENS.test(code[index])) //if it's a singular char
             {
                 if(activeToken)
                 {
@@ -96,13 +69,13 @@ export default class compiler {
                     tempToken = "";
                     activeToken = false;
                 }
-
                 tempToken += code[index];
                 this.tokens[numTokens] = tempToken;
                 tempToken = "";
                 numTokens++;
             }
-            else if(this.LOOK_AHEAD_TOKENS.test(code[index]))
+			
+            else if(this.LOOK_AHEAD_TOKENS.test(code[index])) //if it's a string and we need to look for its end
             {
                 if(activeToken)
                 {
@@ -123,6 +96,7 @@ export default class compiler {
                     tempToken += code[index];
                     index++;
                 }while(index < code.length && code[index] != lookAheadMatch);
+				
                 if(index >= code.length && !stopScan)
                 {
                     console.log("hit end");
@@ -138,6 +112,7 @@ export default class compiler {
                     activeToken = false;
                 }
             }
+			
             else if(this.WHITESPACE_TOKENS.test(code[index]))
             {
                 if(activeToken)
@@ -148,6 +123,7 @@ export default class compiler {
                     activeToken = false;
                 }
             }
+			
             else{
                 tempToken += code[index];
                 activeToken = true;
@@ -184,59 +160,37 @@ export default class compiler {
             switch(this.tokens[index])
             {
                 case "input":
-                    tempErrorCode = this.match_Input(index);
-                    if(tempErrorCode == 1)
+                    stopParse = this.match_Input(index);
+                    if(!stopParse)
                     {
                         index+=3;
-                    }
-                    else{
-                        this.errorCode = tempErrorCode;
-                        stopParse=true;
                     }
                     break;
 
                 case "blank":
-                    tempErrorCode = this.match_Blank(index);
-                    if(tempErrorCode == 1)
+                    stopParse = this.match_Blank(index);
+                    if(!stopParse)
                     {
                         index+=3;
                     }
-                    else{
-                        this.errorCode = tempErrorCode;
-                        console.log("expected blank character inside of quotes");
-                        stopParse = true;
-                    }
                     break;
+					
                 case "start":
-                    tempErrorCode = this.match_StartOrAcceptState(index);
-                    if(tempErrorCode == 1)
-                    {
-                        index+=3;
-                    }
-                    else{
-                        this.errorCode = tempErrorCode;
-                        console.log("expected state name");
-                        stopParse = true;
-                    }
-                    break;
+					//since these use the same func, just group together
                 case "accept":
-                    tempErrorCode = this.match_StartOrAcceptState(index);
-                    if(tempErrorCode == 1)
+                    stopParse = this.match_StartOrAcceptState(index);
+                    if(!stopParse)
                     {
                         index+=3;
                     }
-                    else{
-                        this.errorCode = tempErrorCode;
-                        console.log("expected state name");
-                        stopParse = true;
-                    }
                     break;
+					
                 case "-":
-                    tempErrorCode = this.match_StateName(index);
-                    if(tempErrorCode == 1)
+                    stopParse = this.match_StateName(index);
+                    if(!stopParse)
                     {
                         index+=2;
-                        if(this.tokens[index] != this.SEMICOLON)
+                        if(this.tokens[index] != ";")
                         {
                             tempErrorCode = tempNumPotentialReads = this.match_PotentialReads(index);
                             while(tempNumPotentialReads > 0 && !stopParse)
@@ -295,69 +249,72 @@ export default class compiler {
                         stopParse = true;
                     }
                     break;
-                    
-                    default:
-                        this.errorCode = -214;
-                        stopParse = true;
-                        break;
+					//this is the end of the - case    
+					
+				default:
+					this.errorCode = -214;
+					stopParse = true;
+					break;
             }
             index++;
         }
 
         if(!stopParse)
         {
-            if(this.tempInputString != ""){
-                if(this.tempBlankString != ""){
-                    if(this.tempStartStateString != ""){
-                        if(this.tempAcceptStateString != ""){
-                            if(this.states_Set[0] != undefined)
-                            {
-                                updateTape(this.tempInputString);
-                                turingMachine = new machine(this.tempInputString, this.tempBlankString,this.tempStartStateString, this.tempAcceptStateString, this.states_Set);
-                                this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
-                                this.states_Set = new Array();
-                            }
-                            else{this.errorCode = -204;}//no states defined
-                        }else{this.errorCode = -203;}//accept state not defined
-                    }else{this.errorCode = -202;}//start state not defined
-                }else{this.errorCode = -201;}//blank char not defined
-            }else{this.errorCode = -200;}//input not defined
-        }
+			if(this.states_Set[0] != null)
+			{
+				updateTape(this.tempInputString);
+				turingMachine = new machine(this.tempInputString, this.tempBlankString,this.tempStartStateString, this.tempAcceptStateString, this.states_Set);
+				this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
+				this.states_Set = new Array();
+			}
+			else{this.errorCode = -204;}//no states defined
+		}
 
         return turingMachine;
-
-        
     }
 
-    match_Input(index)
+    match_Input(index) //look for a valid input string
     {
-        let returnVal = -205;
-        if(this.assignment_RegEx.test(this.tokens[index+1]) && this.inputString_RegEx.test(this.tokens[index+2]) && this.endStatement_RegEx.test(this.tokens[index+3]))
-        {
-            this.tempInputString = this.tokens[index+2];
-            this.tempInputString = this.tempInputString.substr(1,this.tempInputString.length-2);
+        let stopParse = false;
+        if(this.tokens[index+1] == "=" && this.inputString_RegEx.test(this.tokens[index+2]) 
+			&& this.tokens[index+3] == ";")
+        { //if set of tokens is =, a valid input string and ;
+            this.tempInputString = this.tokens[index+2].substr(1,this.tempInputString.length-2);
+        }
+		else {
+			this.errorHandler.printBadInputDef();
+			stopParse = true;
+		}
+		//don't need to check if tempInputString is empty cause it won't accept an empty string
+		
+        return stopParse;
+    }
+
+    match_Blank(index) //look for a valid blank char
+    {
+        let stopParse = false;
+        if(this.tokens[index+1] == "=" && this.blankString_RegEx.test(this.tokens[index+2])
+			&& this.tokens[index+3] == ";")
+        { //if set of tokens is =, a single char and ;
+            this.tempBlankString = this.tokens[index+2][1];
             returnVal = 1;
         }
-        return returnVal;
+		else {
+			this.errorHandler.printBadBlankDef();
+			stopParse = true;
+		}
+		//again, can't have empty strings
+		
+        return stopParse;
     }
 
-    match_Blank(index)
+    match_StartOrAcceptState(index) //look for valid start and accept states
     {
-        let returnVal = -206;
-        if(this.assignment_RegEx.test(this.tokens[index+1]) && this.blankString_RegEx.test(this.tokens[index+2]) && this.endStatement_RegEx.test(this.tokens[index+3]))
-        {
-            this.tempBlankString = this.tokens[index+2];
-            this.tempBlankString = this.tempBlankString[1];
-            returnVal = 1;
-        }
-        return returnVal;
-    }
-
-    match_StartOrAcceptState(index)
-    {
-        let returnVal = -207;
-        if(this.assignment_RegEx.test(this.tokens[index+1]) && this.startOrAcceptState_RegEx.test(this.tokens[index+2]) && this.endStatement_RegEx.test(this.tokens[index+3]))
-        {
+        let stopParse = false;
+        if(this.tokens[index+1] == "=" && this.startOrAcceptState_RegEx.test(this.tokens[index+2])
+			&& this.tokens[index+3] == ";")
+        { //if set of tokens is =, a valid string and ;
             if(this.tokens[index] == "start")
             {
                 this.tempStartStateString = this.tokens[index+2];
@@ -366,23 +323,31 @@ export default class compiler {
             {
                 this.tempAcceptStateString = this.tokens[index+2];
             }
-            returnVal = 1;
         }
-        return returnVal;
+		else {
+			this.errorHandler.printBadStateDef();
+			stopParse = true;
+		}
+		//needs to have an start/accept name
+		
+        return stopParse;
     }
 
-    match_StateName(index)
+    match_StateName(index) //looks for a valid state name
     {
-        let returnVal = -208;
+        let stopParse = false;
         if(this.stateName_RegEx.test(this.tokens[index+1]))
         {
             this.tempStateName = this.tokens[index+1];
-            returnVal = 1;
         }
-        return returnVal;
+		else {
+			stopParse = true;
+			this.errorHandler.printBadStateName();
+		}
+        return stopParse;
     }
 
-    match_PotentialReads(index)
+    match_PotentialReads(index) //looks for all the potential reads
     {
         let returnVal = 0;
         let stopMatch = false;
@@ -391,8 +356,9 @@ export default class compiler {
 
         while(returnVal > -1 && !stopMatch)
         {
-            if(this.potentialRead_RegEx.test(this.tokens[index]) || (this.tokens[index] != undefined && this.tokens[index].length == 1))
-            {
+            if(this.potentialRead_RegEx.test(this.tokens[index]) 
+				|| (this.tokens[index] != null && this.tokens[index].length == 1))
+            { //if a string, not null and has a length of 1
                 returnVal++;
 
                 if(this.tokens[index].includes("\"") || this.tokens[index].includes("\'"))
@@ -430,7 +396,6 @@ export default class compiler {
     {
 
         let returnVal = 0;
-
         let tempActionsString = "";
 
         if(this.ActionSetStart_RegEx.test(this.tokens[index]))
