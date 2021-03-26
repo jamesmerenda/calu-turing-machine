@@ -123,8 +123,8 @@ export default class layout{
         
         else{
             document.getElementById("console").style.display = "";
-            document.getElementById("editor").style.bottom = "22%";
-            document.getElementById("machine").style.bottom = "22%";
+            document.getElementById("editor").style.bottom = "27%";
+            document.getElementById("machine").style.bottom = "27%";
         }
 
         this.consoleShown = !this.consoleShown;
@@ -141,7 +141,7 @@ export default class layout{
             
             else{
                 document.getElementById("editor").style.display = "";
-                document.getElementById("machine").style.left = "50.5%";
+                document.getElementById("machine").style.left = "50.35%";
             }
 
             this.editorShown = !this.editorShown;
@@ -159,7 +159,7 @@ export default class layout{
             
             else{
                 document.getElementById("machine").style.display = "";
-                document.getElementById("editor").style.right = "50.5%";
+                document.getElementById("editor").style.right = "50.35%";
             }
 
             this.machineShown = !this.machineShown;

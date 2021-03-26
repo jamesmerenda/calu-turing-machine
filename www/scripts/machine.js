@@ -19,15 +19,16 @@ export default class machine {
 		document.getElementById('step').addEventListener('click', () => this.findTransition());
 		document.getElementById('play').addEventListener('click', () => this.playMachine());
 		document.getElementById('pause').addEventListener('click', () => this.stopTheBus());
+		document.getElementById('reset').addEventListener('click', function(){
+			//document.getElementById('load').click();
+		});
     }
 
 	playMachine()
 	{
-		//need to update transition speed in real time
 		this.playback = setInterval(function(){
 			document.getElementById('step').click();
-			//console.log(desiredSpeedRaw*1000);
-		}, desiredSpeedRaw*1000);
+		}, getSpeed()*1000);
 	}
 
 	stopTheBus()	//I mean, stop the machine...

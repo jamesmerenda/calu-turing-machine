@@ -136,6 +136,7 @@ function findEnd()
 
 function getSpeed()
 {
+	desiredSpeedRaw = parseInt(speedSelector.value)/100;
 	return desiredSpeedRaw;
 }
 
