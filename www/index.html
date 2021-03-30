@@ -9,7 +9,7 @@
 <body>
 	<div class="wrapper">
 		<div class="main-wrapper">
-			<h2>Virtualization of a Turing Machine</h2>
+			<h2 style='user-select: none;'>Virtualization of a Turing Machine</h2>
 			<span class="navigation">
 				<ul>
 					<a href="index.html"><li>Home</li></a>
@@ -32,7 +32,25 @@
 						<button class='editor__buttons' id='load'>Compile Machine</button>
 						<button class='editor__buttons' type='button' id='save'>Save Machine</button>
 						<button class='editor__buttons' id='select'>Select Pre-Made Machine</button>
-						<input class='editor__buttons' type="file" id='upload' accept='.txt'></input>
+						<label class='upload__button' for="upload">Upload Machine</label>
+						<input type="file" id='upload' accept='.txt'></input>
+						<div class='info_button' id='help-code-editor'>
+							&#x1F6C8;
+						</div>
+						<div class='help-box' id='help-code-editor-message' style='display: none;'>
+							<h3><i>What is this?</i></h3>
+							<hr>
+							This is the <i>Transition Editor</i>. <br><br>This field is responsible for converting transitions into information the machine can process.<br><br>To make a machine, there is certain syntax that must be present for the Turing Machine to function:
+							<ol>
+								<li><i>Define legal symbols.</i><!--<br>&emsp;Legal symbols 
+									-->
+								</li>
+								<li><i>Define blank characters.</i></li>
+								<li><i>Define a start and accept state.</i></li>
+								<li><i>Define transitions.</i></li>
+							</ol>
+							For more information regarding the Transition Editor and other functionality, refer to the documentation tab for a user's manual.
+						</div>
 					</div>
 					<ul id='selection_list' style='display: none;'>
 						<lh>Program Category</lh>
@@ -52,6 +70,15 @@
 					</div>
 				</div>
 				<div class = 'console' id= 'console'>
+					<div class='info_button' id='help-console'>
+						&#x1F6C8;
+					</div>
+					<div class='help-box' id='help-console-message' style='display: none;'>
+						<h3><i>What is this?</i></h3>
+						<hr>
+						This is the <i>Console</i>.<br><br>
+						Information related to compilation and the Turing Machine animation will be displayed here.
+					</div>
 					<div class ='console__buttons'>
 						<button id='clearConsole'>Clear Console</button>
 					</div>
@@ -62,10 +89,28 @@
 
 				<div class='machine' id='machine'>
 					<div class='state_diagram'>
+						<div class='info_button' id='help-state-diagram'>
+							&#x1F6C8;
+						</div>
+						<div class='help-box' id='help-state-diagram-message' style='display: none;'>
+							<h3><i>What is this?</i></h3>
+							<hr>
+							This is the <i>State Diagram</i>.<br><br>
+							Transitions based on whats compiled will be generated here in a convenient graphic.
+						</div>
 						State Diagram
 					</div>
 					<div class='tape_view'>
 						<div class="t-machine">
+							<div class='info_button' id='help-machine'>
+								&#x1F6C8;
+							</div>
+							<div class='help-box' id='help-machine-message' style='display: none;'>
+								<h3><i>What is this?</i></h3>
+								<hr>
+								This is the <i>Turing Machine Simulation</i>.<br><br>
+								Once an acceptable machine is compiled, transitions are performed automatically by pressing <i>Play</i> or stepped sequentially by pressing <i>Step</i>. While playing automatically, pressing <i>Pause</i> will pause the machine during a transition.
+							</div>
 							<!--<center style="margin-top: 5px;">
 								<input type="text" id="tapeInput" placeholder="Enter tape input here."/>
 								<button id='enterInput'>Enter Input</button>
@@ -179,9 +224,9 @@
 								<div id="slowLabel">Slower</div>
 									<input id="speedSelector" onload="setDefaultSpeed()" type="range" min="0" max="70" value="35"/>
 								<div id="fastLabel">Faster</div>
-								<div id="currentSpeedContainer">Transition Duration: 
-								<div id="currentSpeed">0.35 s</div>
+								<div id="currentSpeedLabel">Transition Duration: 
 								</div>
+								<div id="currentSpeed">0.35 s</div>
 							</div>
 						</div>
 					</div>
@@ -191,9 +236,6 @@
 							<button class='machine_buttons' id='play'>Play</button>
 							<button class='machine_buttons' id='pause'>Pause</button>
 							<button class='machine_buttons' id='reset'>Reset</button>
-							<button id='resetposbtn' onclick="resetPos()" style="display: none;>reset</button>
-							<button id="moveleftbtn" onclick="moveLeft()" style="display:none;>left</button>
-							<button id="moverightbtn" onclick="moveRight()" style="display:none;">right</button>
 						</div>
 					</center>
 				</div>
@@ -203,18 +245,12 @@
 				<div style="float: right; margin-right:20px;margin-top:7px;">Last Update: Mar-2021</div>
 			</div>
 		</div>
-		<div class="tutorial-wrapper">
-			<div class="tool-tip" id="tip-one"></div>
-			<div class="tool-tip" id="tip-two"></div>
-			<div class="tool-tip" id="tip-three"></div>
-			<div class="tool-tip" id="tip-four"></div>			
-		</div>
 	</div>
 	<script src="scripts/app.js" type="module"></script>
 	<script type="text/javascript" src="scripts/animation.js"></script>
 	<script type="text/javascript" src="scripts/mapper.js"></script>
 	<script type="text/javascript" src="scripts/manipulatePrograms.js"></script>
-	<script type="text/javascript" src="scripts/tutorial.js"></script>
+	<script type="text/javascript" src="scripts/help.js"></script>
 </body>
 
 </html>
