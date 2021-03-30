@@ -139,7 +139,7 @@ input[type="file"] {
 
 .machine {
     position: absolute;
-    top: 6%;
+    top: 56%;
     left: 50.35%;
     right: 1%;
     bottom: 27%;
@@ -150,14 +150,17 @@ input[type="file"] {
     padding: .3%;
 }
 
-.state_diagram {
-    /*
+#state_diagram {
+	position: absolute;
+	top: 6%;
+    left: 50.35%;
+    right: 1%;
+    bottom: 27%;
     border: 1px solid black;
-    background-color: gray;
-    */
-    border-bottom: 3px dotted #b3562e;
+    background-color: lightgray;
+    /*border-bottom: 3px dotted #b3562e;
     height: 45%;
-    width: 100%;
+    width: 100%;*/
 }
 
 .tape_view {
