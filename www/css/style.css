@@ -1,5 +1,7 @@
+fieldset{display: table-column;}
 * {
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 body
@@ -219,7 +221,7 @@ a:hover
 /*github, update this stuff*/
 .t-machine
 {
-	width: 100%;
+	width: 99.93%;
 	height: 100%;
 	/*background-color: white;*/
 	margin: 0;
@@ -307,7 +309,7 @@ a:hover
 {
 	width: 200px;
 	margin-top: 45px;
-	margin-left: 34%;
+	margin-left: 31%;
 	color: white;
 }
 
@@ -315,7 +317,7 @@ a:hover
 {
 	width: 100px;
 	margin-top: -20px;
-	margin-left: 59%;
+	margin-left: 63%;
 	color: white;
 }
 
@@ -361,6 +363,10 @@ a:hover
     width: auto;
     height: auto;
     user-select: none;
+}
+
+.alternate_button {
+	color: black;
 }
 
 .info_button:hover {

@@ -53,10 +53,10 @@
 						</div>
 					</div>
 					<ul id='selection_list' style='display: none;'>
-						<lh>Program Category</lh>
-						<li id='selection_option'>Program 1</li>
-						<li id='selection_option'>Program 2</li>
-						<li id='selection_option'>Program 3</li>
+						<lh>Binary Manipulation</lh>
+						<li id='selection_option'>Binary Increment</li>
+						<li id='selection_option'>Palindrome</li>
+						<li id='selection_option'>Binary Addition</li>
 						<li id='selection_option'>Program 4</li>
 						<lh>Program Category</lh>
 						<li id='selection_option'>Program 5</li>
@@ -86,24 +86,20 @@
 						<textarea class='console__display' id='consoleText'readonly="true"></textarea>
 					</div>
 				</div>
-				
-				<div class='state_diagram'>
-					<div class='info_button' id='help-state-diagram'>
-						&#x1F6C8;
-					</div>
-					<div class='help-box' id='help-state-diagram-message' style='display: none;'>
-						<h3><i>What is this?</i></h3>
-						<hr>
-						This is the <i>State Diagram</i>.<br><br>
-						Transitions based on whats compiled will be generated here in a convenient graphic.
-					</div>
-				
-					<canvas id='state_diagram' width = "500" height = "200">					
-						State Diagram
-					</canvas>		
-				</div>
-
 				<div class='machine' id='machine'>
+					<div class='state_diagram_view'>
+						<div class='info_button alternate_button' id='help-state-diagram'>
+							&#x1F6C8;
+						</div>
+						<div class='help-box' id='help-state-diagram-message' style='display: none;'>
+							<h3><i>What is this?</i></h3>
+							<hr>
+							This is the <i>State Diagram</i>.<br><br>
+							Transitions based on whats compiled will be generated here in a convenient graphic.
+						</div>
+						<canvas id='state_diagram'>
+						</canvas>		
+					</div>
 					<div class='tape_view'>
 						<div class="t-machine">
 							<div class='info_button' id='help-machine'>
@@ -233,15 +229,15 @@
 								<div id="currentSpeed">0.35 s</div>
 							</div>
 						</div>
+						<center>
+							<div class='machine_buttons'>
+								<button class='machine_buttons' id='step'>Step</button>
+								<button class='machine_buttons' id='play'>Play</button>
+								<button class='machine_buttons' id='pause'>Pause</button>
+								<button class='machine_buttons' id='reset'>Reset</button>
+							</div>
+						</center>
 					</div>
-					<center>
-						<div class='machine_buttons'>
-							<button class='machine_buttons' id='step'>Step</button>
-							<button class='machine_buttons' id='play'>Play</button>
-							<button class='machine_buttons' id='pause'>Pause</button>
-							<button class='machine_buttons' id='reset'>Reset</button>
-						</div>
-					</center>
 				</div>
 			</div>
 			<div class="bottom-bar">

@@ -1,24 +1,59 @@
+//collection of example programs from user select
 var programs = [
 [
-'Program 1',
+'Binary Increment',
 
-`This is content associated with Program 1.
-This is more of the program body.
-Probably more here.
-The end of this program.`
+`input = "1011 ";
+blank = " ";
+start = moveright;
+accept = finish;
+
+-moveright      1   [1, r, moveright]
+    		0   [0, r, moveright]
+    		" " [" ", l, carry];
+-carry 		1   [0, l, carry]
+		0   [1, l, finish]
+		" " [1, l, finish];
+-finish;`
 ],
 [
-'Program 2',
+'Palindrome',
 
-`This is content associated with Program 2.
-This is more of the program body.
-Probably more here.
-The end of this program.`
+`input = "0110 ";
+blank = " ";
+start = start;
+accept = accept;
+
+-start 0   [" ", r, have0]
+       1   [" ", r, have1]
+       " " [" ", r, accept];
+
+-have0 0   [0, r, have0]
+       1   [1, r, have0]
+       " " [" ", l, match0];
+
+-have1 0   [0, r, have1]
+       1   [1, r, have1]
+       " " [" ", l, match1];
+
+-match0 0   [" ", l, back]
+	1   [1, l, accept]
+	" " [" ", l, accept];
+
+-match1 1   [" ", l, back]
+	0   [0, l, accept]
+	" " [" ", l, accept];
+
+-back 0   [0, l, back]
+      1   [1, l, back]
+      " " [" ", r, start];
+
+-accept;`
 ],
 [
 'Program 3',
 
-`This is content associated with Program 3.
+`This is content associated with Program 3
 This is more of the program body.
 Probably more here.
 The end of this program.`

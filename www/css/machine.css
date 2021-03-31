@@ -139,7 +139,7 @@ input[type="file"] {
 
 .machine {
     position: absolute;
-    top: 56%;
+    top: 6%;
     left: 50.35%;
     right: 1%;
     bottom: 27%;
@@ -147,28 +147,26 @@ input[type="file"] {
     outline-color: #b3562e;
     outline-width: 4px;
     outline-style: inset;
-    padding: .3%;
+}
+
+.state_diagram_view {
+    position: flex;
+    width: 100%;
+    height: 40%;
+    background-color: #523015;
 }
 
 #state_diagram {
-	position: absolute;
-	top: 6%;
-    left: 50.35%;
-    right: 1%;
-    bottom: 27%;
     border: 1px solid black;
     background-color: lightgray;
-    /*border-bottom: 3px dotted #b3562e;
-    height: 45%;
-    width: 100%;*/
+    width: 100%;
+    height: 100%;
+    /*border-bottom: 3px dotted #b3562e;*/
 }
 
 .tape_view {
-    height: 47%;
-    /*border: 1px solid black;
-    border-top: none;
-    background-color: gray;
-    */
+    position: flex;
+    height: 50%;
 }
 
 .machine_buttons {
