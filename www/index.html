@@ -41,28 +41,35 @@
 							<h3><i>What is this?</i></h3>
 							<hr>
 							This is the <i>Transition Editor</i>. <br><br>This field is responsible for converting transitions into information the machine can process.<br><br>To make a machine, there is certain syntax that must be present for the Turing Machine to function:
-							<ol>
-								<li><i>Define legal symbols.</i><!--<br>&emsp;Legal symbols 
+							<ul>
+								<li><i><a class='help-link-behavior' id='help-legal-symbols'>Define legal symbols.</i></a><!--<br>&emsp;Legal symbols 
 									-->
 								</li>
-								<li><i>Define blank characters.</i></li>
-								<li><i>Define a start and accept state.</i></li>
-								<li><i>Define transitions.</i></li>
-							</ol>
+								<li><i><a class='help-link-behavior' id='help-blank-characters'>Define blank characters.</i></a></li>
+								<li><i><a class='help-link-behavior' id='help-states'>Define a start and accept state.</a></i></li>
+								<li><i><a class='help-link-behavior' id='help-transitions'>Define transitions.</a></i></li>
+							</ul>
+							There are also a selection of example programs to choose from by selecting the <i>Select Pre-Made Machine</i> button. For explanations on how these machine's work. Click the relevant name of the machine below.<br>
+							<ul>
+								<li><i><a class='help-link-behavior' id='help-binary-palindrome'>Binary Palindrome</a></i></li>
+								<li><i><a class='help-link-behavior' id='help-binary-pong'>Binary Pong</a></i></li>
+								<li><i><a class='help-link-behavior' id='help-the-classic'>The Classic</a></i></li>
+								<li><i><a class='help-link-behavior' id='help-binary-increment'>Binary Increment</a></i></li>
+								<li><i><a class='help-link-behavior' id='help-binary-addition'>Binary Addition</a></i></li>
+								<li><i><a class='help-link-behavior' id='help-binary-complement'>Binary Complement</a></i></li>
+							</ul>
 							For more information regarding the Transition Editor and other functionality, refer to the documentation tab for a user's manual.
 						</div>
 					</div>
 					<ul id='selection_list' style='display: none;'>
 						<lh>Binary Manipulation</lh>
-						<li id='selection_option'>Binary Increment</li>
 						<li id='selection_option'>Palindrome</li>
+						<li id='selection_option'>Binary Pong</li>
+						<li id='selection_option'>The Classic</li>
+						<lh>Binary Arithmetic</lh>
+						<li id='selection_option'>Binary Increment</li>
 						<li id='selection_option'>Binary Addition</li>
-						<li id='selection_option'>Program 4</li>
-						<lh>Program Category</lh>
-						<li id='selection_option'>Program 5</li>
-						<li id='selection_option'>Program 6</li>
-						<li id='selection_option'>Program 7</li>
-						<li id='selection_option'>Program 8</li>
+						<li id='selection_option'>Binary Complement</li>
 					</ul>
 					<div class ='editor__text'>
 						<textarea class='editor__text__line-numbers' id='line-numbers' placeholder='1' readonly="true"></textarea>

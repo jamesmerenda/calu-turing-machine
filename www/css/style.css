@@ -416,3 +416,11 @@ a:hover
 {
 	right: .6%;
 }
+
+.help-link-behavior
+{
+	cursor: pointer;
+	user-select: none;
+	width: auto;
+	height: auto;
+}
