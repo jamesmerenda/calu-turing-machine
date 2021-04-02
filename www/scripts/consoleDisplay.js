@@ -1,4 +1,5 @@
-export default class {
+export default class consoleDisplay {
+	
     constructor() {
         this.console = document.getElementById("consoleText");
         document.getElementById('clearConsole').addEventListener('click', () => this.clearConsole());
@@ -8,7 +9,12 @@ export default class {
     {
         this.console.value = "";
     }
+	
+	setValue(value) {
+		this.console.value = value;
+	}
 
+	/* remove once done checking 
     displayError (errorCode, errorContext) {
         switch(errorCode)
         {
@@ -64,9 +70,9 @@ export default class {
                 this.console.value = "expected end of quotes before new line";
                 break;
         }
+		
 
-
-    }
+    } */
 
     displayMachine(machine)
     {

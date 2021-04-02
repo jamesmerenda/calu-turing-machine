@@ -1,43 +1,154 @@
+//collection of example programs from user select
 var programs = [
 [
-'Program 1',
+'Binary Increment',
 
-`This is content associated with Program 1.
-This is more of the program body.
-Probably more here.
-The end of this program.`
+`input = "1011 ";
+blank = " ";
+start = moveright;
+accept = finish;
+
+-moveright      1   [1, r, moveright]
+    		0   [0, r, moveright]
+    		" " [" ", l, carry];
+-carry 		1   [0, l, carry]
+		0   [1, l, finish]
+		" " [1, l, finish];
+-finish;`
 ],
 [
-'Program 2',
+'Palindrome',
 
-`This is content associated with Program 2.
-This is more of the program body.
-Probably more here.
-The end of this program.`
+`input = "0110 ";
+blank = " ";
+start = start;
+accept = accept;
+
+-start 0   [" ", r, have0]
+       1   [" ", r, have1]
+       " " [" ", r, accept];
+
+-have0 0   [0, r, have0]
+       1   [1, r, have0]
+       " " [" ", l, match0];
+
+-have1 0   [0, r, have1]
+       1   [1, r, have1]
+       " " [" ", l, match1];
+
+-match0 0   [" ", l, back]
+	1   [1, l, accept]
+	" " [" ", l, accept];
+
+-match1 1   [" ", l, back]
+	0   [0, l, accept]
+	" " [" ", l, accept];
+
+-back 0   [0, l, back]
+      1   [1, l, back]
+      " " [" ", r, start];
+
+-accept;`
 ],
 [
-'Program 3',
+'Binary Addition',
 
-`This is content associated with Program 3.
-This is more of the program body.
-Probably more here.
-The end of this program.`
+`input = "1011+11001";
+blank = " ";
+start = right;
+accept = done;
+
+-right 
+       0   [0, r, right]
+       1   [1, r, right]
+       +   [+, r, right]
+       " " [" ", l, read];
+
+-read 0 [c, l, have0]
+      1 [c, l, have1]
+      + [" ", l, rewrite];
+
+-have0 0 [0, l, have0]
+       1 [1, l, have0]
+       + [+, l, add0];
+
+-have1 0 [0, l, have1]
+       1 [1, l, have1]
+       + [+, l, add1];
+
+-add0 0   [O, r, back0]
+      " " [O, r, back0]
+      1   [i, r, back0]
+      o   [i, l, add0]
+      i   [i, l, add0];
+
+-add1 0   [I, r, back1]
+      " " [I, r, back1]
+      1   [o, l, carry]
+      o   [o, l, add1]
+      i   [i, l, add1];
+
+-carry 0   [1, r, back1]
+       " " [1, r, back1]
+       1   [0, l, carry];
+
+-back0 0 [0, r, back0]
+       1 [1, r, back0]
+       o [o, r, back0]
+       i [i, r, back0]
+       + [+, r, back0]
+       c [1, l, read];
+
+-back1 0 [0, r, back0]
+       1 [1, r, back0]
+       o [o, r, back0]
+       i [i, r, back0]
+       + [+, r, back0]
+       c [1, l, read];
+
+-rewrite o   [0, l, rewrite]
+         i   [1, l, rewrite]
+         0   [0, l, rewrite]
+         1   [1, l, rewrite]
+         " " [" ", r, done];
+
+-done;`
 ],
 [
-'Program 4',
+'Binary Pong',
 
-`This is content associated with Program 4
-This is more of the program body.
-Probably more here.
-The end of this program.`
+`input = "0 1";
+blank = " ";
+start = start;
+accept = never;
+
+-start 0   [1, r, ping]
+       1   [0, r, ping];
+
+-ping " " [" ", r, ping]
+      1   [0, l, pong]
+      0   [1, l, pong];
+
+-pong " " [" ", l, pong]
+      1	  [0, r, ping]
+      0	  [1, r, ping];
+
+-never;`
 ],
 [
-'Program 5',
+'The Classic',
 
-`This is content associated with Program 5.
-This is more of the program body.
-Probably more here.
-The end of this program.`
+`input = " ";
+blank = " ";
+start = b;
+accept = never;
+
+-b " " [0, r, c];
+-c " " [" ", r, e];
+-e " " [1, r, f];
+-f " " [" ", r, b];
+
+-never;`
 ],
 [
 'Program 6',

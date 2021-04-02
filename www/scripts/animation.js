@@ -1,3 +1,4 @@
+//declaration of all cells in animator
 var cell = [document.getElementById('0'),document.getElementById('1'),document.getElementById('2'),
 			document.getElementById('3'),document.getElementById('4'),document.getElementById('5'),
 			document.getElementById('6'),document.getElementById('7'),document.getElementById('8'),
@@ -34,13 +35,13 @@ var cell = [document.getElementById('0'),document.getElementById('1'),document.g
 			document.getElementById('98'),document.getElementById('99'),document.getElementById('100'),
 			];
 
-var basecellpos = [];
-var cellpos = [];
+var basecellpos = [];	//cell positions when website is loaded
+var cellpos = [];	//live positions of each cell
 
-var speedSelector = document.getElementById("speedSelector");
-var desiredSpeedRaw = parseInt(speedSelector.value)/100;
+var speedSelector = document.getElementById("speedSelector");	//slider from webpage
+var desiredSpeedRaw = parseInt(speedSelector.value)/100;	//raw value from slider in miliseconds
 var desiredSpeed = desiredSpeedRaw + 's';
-var displaySpeed = desiredSpeed;
+var displaySpeed = desiredSpeed;	
 
 for(let i=0;i<cell.length;i++)
 {
@@ -136,6 +137,7 @@ function findEnd()
 
 function getSpeed()
 {
+	desiredSpeedRaw = parseInt(speedSelector.value)/100;
 	return desiredSpeedRaw;
 }
 

@@ -1,3 +1,7 @@
+input[type="file"] {
+    display: none;
+}
+
 .options {
     position: absolute;
     top:1%;
@@ -19,10 +23,13 @@
     outline-style: outset;
 }
 
+.option_buttons:hover {
+    cursor: pointer;
+}
+
 .option_buttons:onpressdown {
     outline-style: inset;
 }
-
 
 .ide {
     display: flex;
@@ -31,7 +38,7 @@
 
 .console {
     position: absolute;
-    top: 74%;
+    top: 74.5%;
     bottom: 1%;
     left: 1%;
     right: 1%;
@@ -73,6 +80,32 @@
     font-size: 11px;
     padding-top: .6%;
     padding-left: 1%;
+    padding-right: 1%;
+}
+
+.upload__button {
+    width: auto;
+    height: 19.7px;
+    padding: 1%;
+    padding-top: .8%;
+    margin-top: .6px;
+    margin-left: .7px;
+    background-color: #efefef;
+    font-family: sans-serif;
+    color: black;
+    outline: .25px solid #767676;
+}
+
+#load:hover, #save:hover, #select:hover {
+    cursor: pointer;
+    background-color: lightgrey;
+}
+.upload__button:hover {
+    cursor: pointer;
+    background-color: lightgrey;
+    outline: 2px outset #666666;
+    outline-offset: -1px;
+    box-shadow: 0 0 0 0;
 }
 
 .editor__text {
@@ -114,25 +147,26 @@
     outline-color: #b3562e;
     outline-width: 4px;
     outline-style: inset;
-    padding: .3%;
 }
 
-.state_diagram {
-    /*
-    border: 1px solid black;
-    background-color: gray;
-    */
-    border-bottom: 3px dotted #b3562e;
-    height: 45%;
+.state_diagram_view {
+    position: flex;
     width: 100%;
+    height: 40%;
+    background-color: #523015;
+}
+
+#state_diagram {
+    border: 1px solid black;
+    background-color: lightgray;
+    width: 100%;
+    height: 100%;
+    /*border-bottom: 3px dotted #b3562e;*/
 }
 
 .tape_view {
-    height: 47%;
-    /*border: 1px solid black;
-    border-top: none;
-    background-color: gray;
-    */
+    position: flex;
+    height: 50%;
 }
 
 .machine_buttons {
@@ -147,7 +181,7 @@
     max-height: 50%;
     width: 300px;
     overflow-y: auto;
-    left: 140px;
+    left: 190px;
     top: 10px;
 }
 
@@ -162,6 +196,7 @@
     border-width: 1px;
     background-color: #b3562e;
     text-align: center;
+    user-select: none;
 }
 
 #selection_list li
@@ -178,6 +213,7 @@
     border-width: 1px;
     background-color: black;
     text-align: center;
+    user-select: none;
 }
 
 #selection_list li:hover
