@@ -20,7 +20,7 @@ export default class machine {
 		document.getElementById('play').addEventListener('click', () => this.playMachine());
 		document.getElementById('pause').addEventListener('click', () => this.stopTheBus());
 		document.getElementById('reset').addEventListener('click', function(){
-			//document.getElementById('load').click();
+			document.getElementById('load').click();
 		});
     }
 
@@ -42,7 +42,7 @@ export default class machine {
 		const POTENTIALREADS = 1; //ex [0][1] "0"
 		const TRANSITIONSTEPS = 2; //ex [0][2] "1;r;q0"
 
-		let currentRead = this.result[this.readHeadIndex];
+		let currentRead = getCellUnderHead();
 		let currentState = this.currentState;
 
 		let error = 0;
@@ -54,22 +54,21 @@ export default class machine {
 				if(currentState[POTENTIALREADS][i].includes(currentRead)){//proceed with the parallel transition steps
 					console.log("about to transition");
 					this.performTransition(currentState[TRANSITIONSTEPS][i], this.result);
-					currentRead = this.result[this.readHeadIndex];
 					i=currentState[POTENTIALREADS].length +1;
 				}
 
 
 				else if(i == currentState[POTENTIALREADS].length - 1){//if the state does not recognise the character
 					error = -4000;//edit error please
-					console.log("error");}
+					console.log("cannot transition:" + currentRead);}
 			}
 		}
 
 		if(currentState[STATENAME] == this.accept)//is the machine done?
 		{
+			console.log("fin");
 			clearInterval(this.playback);
 		}
-
 		
 	}
 

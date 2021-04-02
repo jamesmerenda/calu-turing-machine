@@ -5,7 +5,7 @@ import errorHandler from "./errorHandler.js";
 export default class compiler {
 	
 	//various regex combos
-	SINGLE_CHAR_TOKENS = /-|=|;|,|\[|\]/;
+	SINGLE_CHAR_TOKENS = /#|-|=|;|,|\[|\]/;
 	LOOK_AHEAD_TOKENS = /'|"/;
 	WHITESPACE_TOKENS = /\s/;
 	
@@ -23,7 +23,6 @@ export default class compiler {
 	ActionSetEnd_RegEx = /\]/;
 	
     constructor() {
-<<<<<<< HEAD
 
         this.SINGLE_CHAR_TOKENS = /#|-|=|;|,|\[|\]/;
         this.LOOK_AHEAD_TOKENS = /'|"/;
@@ -50,10 +49,6 @@ export default class compiler {
         this.ActionSetStart_RegEx = /\[/;
         this.ActionSetEnd_RegEx = /\]/;
 
-=======
-		this.errorHandler = new errorHandler();
-		
->>>>>>> 1c05c910e19cbc5b63b5d593fd34fa24a1cb4e35
         this.numTokens = 0;
         this.tokens = new Array();
 
@@ -73,6 +68,11 @@ export default class compiler {
         this.userCode = undefined;
         this.loadCode = undefined;
         document.getElementById('load').addEventListener('click', () => this.loadCode());
+    }
+
+    getErrorCode()
+    {
+        return this.errorCode;
     }
 
     scanTokens() //looking for tokens
@@ -98,7 +98,6 @@ export default class compiler {
                     tempToken = "";
                     activeToken = false;
                 }
-<<<<<<< HEAD
 
                 if(code[index] == '#')
                 {
@@ -113,12 +112,6 @@ export default class compiler {
                     tempToken = "";
                     numTokens++;
                 }
-=======
-                tempToken += code[index];
-                this.tokens[numTokens] = tempToken;
-                tempToken = "";
-                numTokens++;
->>>>>>> 1c05c910e19cbc5b63b5d593fd34fa24a1cb4e35
             }
 			
             else if(this.LOOK_AHEAD_TOKENS.test(code[index])) //if it's a string and we need to look for its end
@@ -209,6 +202,7 @@ export default class compiler {
                     stopParse = this.match_Input(index);
                     if(!stopParse)
                     {
+                        console.log(this.tempInputString);
                         index+=3;
                     }
                     break;
@@ -217,6 +211,7 @@ export default class compiler {
                     stopParse = this.match_Blank(index);
                     if(!stopParse)
                     {
+                        console.log("blank");
                         index+=3;
                     }
                     break;
@@ -227,6 +222,7 @@ export default class compiler {
                     stopParse = this.match_StartOrAcceptState(index);
                     if(!stopParse)
                     {
+                        console.log("accept or start");
                         index+=3;
                     }
                     break;
@@ -309,7 +305,8 @@ export default class compiler {
         {
 			if(this.states_Set[0] != null)
 			{
-				updateTape(this.tempInputString);
+                console.log(this.tempInputString);
+				updateTape(this.tempInputString, this.tempBlankString);
 				turingMachine = new machine(this.tempInputString, this.tempBlankString,this.tempStartStateString, this.tempAcceptStateString, this.states_Set);
 				this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
 				this.states_Set = new Array();
@@ -326,7 +323,7 @@ export default class compiler {
         if(this.tokens[index+1] == "=" && this.inputString_RegEx.test(this.tokens[index+2]) 
 			&& this.tokens[index+3] == ";")
         { //if set of tokens is =, a valid input string and ;
-            this.tempInputString = this.tokens[index+2].substr(1,this.tempInputString.length-2);
+            this.tempInputString = this.tokens[index+2].substr(1,this.tokens[index+2].length-2);
         }
 		else {
 			this.errorHandler.printBadInputDef();
@@ -344,7 +341,7 @@ export default class compiler {
 			&& this.tokens[index+3] == ";")
         { //if set of tokens is =, a single char and ;
             this.tempBlankString = this.tokens[index+2][1];
-            returnVal = 1;
+            stopParse = false;
         }
 		else {
 			this.errorHandler.printBadBlankDef();

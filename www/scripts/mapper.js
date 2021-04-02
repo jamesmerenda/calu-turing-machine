@@ -58,6 +58,10 @@ function mapInput(input) {
 	}
 }
 */
+function getCellUnderHead()
+{
+	return cell[findBeginning() + 5].querySelector('.cell-contents').innerHTML;
+}
 
 function updateCell(result)
 {
@@ -65,15 +69,14 @@ function updateCell(result)
 	cell[cellUnderHead].querySelector('.cell-contents').innerHTML = result;
 }
 
-function updateTape(updatedTape)
+function updateTape(updatedTape, blankChar)
 {
-	console.log(updatedTape);
 	//reset cells to default positions
 	resetPos();
 	//clear contents from cells
 	for(let i=0;i<cell.length;++i)
 	{
-		cell[i].querySelector('.cell-contents').innerHTML = '';
+		cell[i].querySelector('.cell-contents').innerHTML = blankChar;
 	}
 	let tapeBeginning = findBeginning();
 	for(let i=tapeBeginning+5;i<cell.length;++i)
