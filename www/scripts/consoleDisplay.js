@@ -70,7 +70,7 @@ export default class {
 
     displayMachine(machine)
     {
-        this.console.value =`i: ${machine.input}\nb: ${machine.blank}\ns: ${machine.start}\na: ${machine.accept}\n`;
+        this.console.value =`Successful Machine Build!\ni: ${machine.input}\nb: ${machine.blank}\ns: ${machine.start}\na: ${machine.accept}\n`;
 
         for(let i = 0; i < machine.numStates;i++)
         {

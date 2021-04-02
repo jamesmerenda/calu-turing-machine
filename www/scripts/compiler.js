@@ -4,7 +4,7 @@ import "./mapper.js";
 export default class compiler {
     constructor() {
 
-        this.SINGLE_CHAR_TOKENS = /-|=|;|,|\[|\]/;
+        this.SINGLE_CHAR_TOKENS = /#|-|=|;|,|\[|\]/;
         this.LOOK_AHEAD_TOKENS = /'|"/;
         this.WHITESPACE_TOKENS = /\s/;
         this.SEMICOLON = ";";
@@ -97,10 +97,19 @@ export default class compiler {
                     activeToken = false;
                 }
 
-                tempToken += code[index];
-                this.tokens[numTokens] = tempToken;
-                tempToken = "";
-                numTokens++;
+                if(code[index] == '#')
+                {
+                    do{
+                        index++;
+                    }while(index < code.length && code[index] != '\n');
+                }
+                else
+                {
+                    tempToken += code[index];
+                    this.tokens[numTokens] = tempToken;
+                    tempToken = "";
+                    numTokens++;
+                }
             }
             else if(this.LOOK_AHEAD_TOKENS.test(code[index]))
             {
