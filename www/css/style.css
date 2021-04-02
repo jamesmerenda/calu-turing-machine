@@ -387,13 +387,18 @@ a:hover
 	top: 5%;
     right: 5%;
     z-index: 1;
-	background-color: #b3562e;
+	background-color: #784d2c;
 	outline-color: #b3562e;
 	outline-width: 6px;
 	outline-style: ridge;
 	color: white;
 	font: initial;
 	overflow-y: auto;
+}
+
+.help-box a
+{
+	color: red;
 }
 
 #help-machine-message
@@ -418,6 +423,14 @@ a:hover
 }
 
 .help-link-behavior
+{
+	cursor: pointer;
+	user-select: none;
+	width: auto;
+	height: auto;
+}
+
+#return-to-editor-default-message
 {
 	cursor: pointer;
 	user-select: none;

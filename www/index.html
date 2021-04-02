@@ -42,22 +42,54 @@
 							<hr>
 							This is the <i>Transition Editor</i>. <br><br>This field is responsible for converting transitions into information the machine can process.<br><br>To make a machine, there is certain syntax that must be present for the Turing Machine to function:
 							<ul>
-								<li><i><a class='help-link-behavior' id='help-legal-symbols'>Define legal symbols.</i></a><!--<br>&emsp;Legal symbols 
-									-->
-								</li>
-								<li><i><a class='help-link-behavior' id='help-blank-characters'>Define blank characters.</i></a></li>
-								<li><i><a class='help-link-behavior' id='help-states'>Define a start and accept state.</a></i></li>
-								<li><i><a class='help-link-behavior' id='help-transitions'>Define transitions.</a></i></li>
+								<li><i><a class='help-link-behavior' href='#help-legal-symbols'>Define legal symbols.</i></a></li>
+								<li><i><a class='help-link-behavior' href='#help-blank-characters'>Define blank characters.</i></a></li>
+								<li><i><a class='help-link-behavior' href='#help-states'>Define a start and accept state.</a></i></li>
+								<li><i><a class='help-link-behavior' href='#help-transitions'>Define transitions.</a></i></li>
 							</ul>
 							There are also a selection of example programs to choose from by selecting the <i>Select Pre-Made Machine</i> button. For explanations on how these machine's work. Click the relevant name of the machine below.<br>
 							<ul>
-								<li><i><a class='help-link-behavior' id='help-binary-palindrome'>Binary Palindrome</a></i></li>
-								<li><i><a class='help-link-behavior' id='help-binary-pong'>Binary Pong</a></i></li>
-								<li><i><a class='help-link-behavior' id='help-the-classic'>The Classic</a></i></li>
-								<li><i><a class='help-link-behavior' id='help-binary-increment'>Binary Increment</a></i></li>
-								<li><i><a class='help-link-behavior' id='help-binary-addition'>Binary Addition</a></i></li>
-								<li><i><a class='help-link-behavior' id='help-binary-complement'>Binary Complement</a></i></li>
+								<li><i><a class='help-link-behavior' href='#help-binary-palindrome'>Binary Palindrome</a></i></li>
+								<li><i><a class='help-link-behavior' href='#help-binary-pong'>Binary Pong</a></i></li>
+								<li><i><a class='help-link-behavior' href='#help-the-classic'>The Classic</a></i></li>
+								<li><i><a class='help-link-behavior' href='#help-binary-increment'>Binary Increment</a></i></li>
+								<li><i><a class='help-link-behavior' href='#help-binary-addition'>Binary Addition</a></i></li>
+								<li><i><a class='help-link-behavior' href='#help-binary-complement'>Binary Complement</a></i></li>
 							</ul>
+							<hr>
+							<div id='help-legal-symbols'><i><b>Legal Symbols</b></i></div><br>
+								Legal symbols are defined by the <i>**</i> phrase. It is an extra security during compilation so foreign symbols are identified and alerted to the user when an illegal input symbol or transition symbol is detected.<br><br>The syntax is written as shown below:<br><br>
+								<i>** = "symbols";</i><br>
+							<hr>
+							<div id='help-blank-characters'><i><b>Blank Characters</b></i></div><br>
+								Blank characters are defined with the <i>blank</i> phrase. It is a value used to fill each cell in the Turing Machine tape with the user-defined blank character.<br><br>The syntax is written as shown below:<br><br><i>blank = "blankSymbol";</i><br>
+							<hr>
+							<div id='help-states'><i><b>Start and Accept States</b></i></div><br>
+								The start and accept states are transitions that begin and end the Turing machine respectively. These states may be named anything the user defines.<br><br>The syntax is written as shown below:<br><br><i>start = startName;<br>accept = acceptName;</i><br>
+							<hr>
+							<div id='help-transitions'><i><b>Transitions</b></i></div><br>
+								Transitions are moves the Turing machine makes based on the current state and input read from the tape. The user may define their own transitions in the code editor.<br><br>The syntax is written as shown below:<br><br><i>-name readSymbol [symbolToWrite, direction, nextState];</i><br><br>
+								Multiple transition definitions may be assigned to the same state as well like the following:<br><br>-name readSymbol <br>[symbolToWriteA, direction, nextState]<br>[symbolToWriteB, direction, nextState];
+							<hr>
+							<div id='help-binary-palindrome'><i><b>Binary Palindrome</b></i></div><br>
+								The Binary Palindrome machine
+							<hr>
+							<div id='help-binary-pong'><i><b>Binary Pong</b></i></div><br>
+								The Binary Pong machine
+							<hr>
+							<div id='help-the-classic'><i><b>The Classic</b></i></div><br>
+								The Classic machine is an example Turing machine proposed by Alan Turing himself as a demonstration of how these sorts of machines may operate.
+							<hr>
+							<div id='help-binary-increment'><i><b>Binary Increment</b></i></div><br>
+								The Binary Increment machine accepts a string of binary and increments its value by 1.
+							<hr>
+							<div id='help-binary-addition'><i><b>Binary Addition</b></i></div><br>
+								The Binary Addition machine takes two binary numbers separated by a '+' symbol and sums them together.
+							<hr>
+							<div id='help-binary-complement'><i><b>Binary Complement</b></i></div><br>
+								The Binary Complement machine accepts any binary number and produces its complement.
+							<hr>
+							<br>
 							For more information regarding the Transition Editor and other functionality, refer to the documentation tab for a user's manual.
 						</div>
 					</div>
@@ -118,10 +150,6 @@
 								This is the <i>Turing Machine Simulation</i>.<br><br>
 								Once an acceptable machine is compiled, transitions are performed automatically by pressing <i>Play</i> or stepped sequentially by pressing <i>Step</i>. While playing automatically, pressing <i>Pause</i> will pause the machine during a transition.
 							</div>
-							<!--<center style="margin-top: 5px;">
-								<input type="text" id="tapeInput" placeholder="Enter tape input here."/>
-								<button id='enterInput'>Enter Input</button>
-							</center>-->
 							<div class="read-head-indicator"></div>
 							<div class="read-head"></div>
 							<div class="tape">
