@@ -18,9 +18,6 @@ markupCompiler.loadCode = function () {
     }
     else{
         console.log("compiler failed");
-    }
-    else
-    {
         machineConsole.displayError(markupCompiler.getErrorCode());
     }
 

@@ -96,12 +96,7 @@ export default class errorHandler {
 		this.display.setValue(`Expected list of potential reads for state: ${errorContext}`);
 	}
 
-<<<<<<< Updated upstream
-	printBadStateSyntax(errorStateRef, errorSymbolRef) { //don't need \n with template literals
-=======
 	printBadStateSyntax(stateContext, symbolContext) { //don't need \n with template literals
-		//-210
->>>>>>> Stashed changes
 		this.display.setValue(`Potentially incorrect syntax for action set.
 		State: ${stateContext}
 		Symbols: ${symbolContext}
