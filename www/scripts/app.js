@@ -1,13 +1,13 @@
 import layout from "./layout.js";
 import compiler from "./compiler.js";
 import consoleDisplay from "./consoleDisplay.js";
+import stateDiagram from "./stateDiagram.js";
 
 let machine = undefined;
 
 let machineLayout = new layout();
 let markupCompiler = new compiler();
 let machineConsole = new consoleDisplay();
-
 
 markupCompiler.loadCode = function () {
     machine = undefined;
@@ -19,4 +19,18 @@ markupCompiler.loadCode = function () {
     else{
         console.log("compiler failed");
     }
+    else
+    {
+        machineConsole.displayError(markupCompiler.getErrorCode());
+    }
+
+    if(machine == undefined)
+        machineConsole.displayError(markupCompiler.getErrorCode(), markupCompiler.getErrorContext());
+    else
+    {
+        machineConsole.displayMachine(machine);
+		
+		let diagram = new stateDiagram(machine.getStates(), machine.getStart(), machine.getAccept());
+		diagram.drawDiagram();
+	}
 };

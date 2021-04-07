@@ -37,6 +37,7 @@ export default class errorHandler {
 	
 	//general print to console right now, can be edited to include specific details later
 	printBadEOF() {
+		//-100
 		this.display.setValue("Expected end of quotes but reached end of file");
 	}
 	
@@ -86,17 +87,24 @@ export default class errorHandler {
 	}
 	
 	printBadEOL() {
+		//-220
 		this.display.setValue("Expected end of quotes before new line");
 	}
 	
 	printBadStateRead(errorContext) { //template literals start here
+		//-209
 		this.display.setValue(`Expected list of potential reads for state: ${errorContext}`);
 	}
 
+<<<<<<< Updated upstream
 	printBadStateSyntax(errorStateRef, errorSymbolRef) { //don't need \n with template literals
+=======
+	printBadStateSyntax(stateContext, symbolContext) { //don't need \n with template literals
+		//-210
+>>>>>>> Stashed changes
 		this.display.setValue(`Potentially incorrect syntax for action set.
-		State: ${errorContext[0]}
-		Symbols: ${errorContext[1]}
+		State: ${stateContext}
+		Symbols: ${symbolContext}
 		Expected: [char, (l|r), state name]`);
 	}
 

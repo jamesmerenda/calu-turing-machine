@@ -9,18 +9,15 @@ export default class compiler {
 	LOOK_AHEAD_TOKENS = /'|"/;
 	WHITESPACE_TOKENS = /\s/;
 	
-	inputIdentifier_RegEx = /input/;
-	inputString_RegEx = /("|').+("|')/;
-	blankString_RegEx = /("|').("|')/;
+	inputString_RegEx = /.+/;
+	blankString_RegEx = /^.{1}$/; //forces a single char
 	startOrAcceptState_RegEx = /.+/;
 
 	stateName_RegEx = /\S+/;
-	potentialRead_RegEx = /('|").('|")/;
-	writeAction_RegEx = /(^.$)|(("|').("|'))/;
-	directionAction_RegEx = /(r|l)/;
+	potentialRead_RegEx = /^.{1}$/;
+	writeAction_RegEx = /^.{1}$/;
+	directionAction_RegEx = /^(r|l){1}$/;
 	nextStateAction_RegEx = /\S+/;
-	ActionSetStart_RegEx = /\[/;
-	ActionSetEnd_RegEx = /\]/;
 	
     constructor() {
 
@@ -130,7 +127,7 @@ export default class compiler {
                     if(this.WHITESPACE_TOKENS.test(code[index]) && code[index] != " ")
                     {
                         stopScan = true;
-                        this.errorCode = -220;
+                        errorHandler.printBadEOL();
                     }
                     tempToken += code[index];
                     index++;
@@ -138,9 +135,8 @@ export default class compiler {
 				
                 if(index >= code.length && !stopScan)
                 {
-                    console.log("hit end");
                     stopScan = true;
-                    this.errorCode = -100;//Expected end of quotes but reached end of file
+                    errorHandler.printBadEOF();
                 }
                 else
                 {
@@ -176,8 +172,22 @@ export default class compiler {
             index++;
         }
         this.numTokens = numTokens;
+		this.cleanTokens();
+		
         return stopScan;
     }
+	
+	cleanTokens() { //strips "/' from tokens so we don't have to keep checking them every time
+		let index = 0;
+		
+		while(index < this.numTokens) {
+			if(this.tokens[index].includes("\"") || this.tokens[index].includes("\'")) {
+				this.tokens[index] = this.tokens[index].substr(1,this.tokens[index].length-2)
+			}
+			index++;
+		}
+		return;
+	}
 
     parseTokens()
     {
@@ -227,12 +237,12 @@ export default class compiler {
                     }
                     break;
 					
-                case "-":
+                case "-": //grabs a state, its potential reads and potential nexts
                     stopParse = this.match_StateName(index);
                     if(!stopParse)
                     {
                         index+=2;
-                        if(this.tokens[index] != ";")
+                        if(this.tokens[index] != ";") //if we haven't reached the end of a line
                         {
                             tempErrorCode = tempNumPotentialReads = this.match_PotentialReads(index);
                             while(tempNumPotentialReads > 0 && !stopParse)
@@ -244,7 +254,7 @@ export default class compiler {
                                 if(tempNumActions > 0)
                                 {
                                     index+=(tempNumActions*2)+1;
-                                    if(this.tokens[index] == this.SEMICOLON)
+                                    if(this.tokens[index] == ";")
                                     {
                                         addState = true;
                                     }
@@ -403,14 +413,7 @@ export default class compiler {
 				|| (this.tokens[index] != null && this.tokens[index].length == 1))
             { //if a string, not null and has a length of 1
                 returnVal++;
-
-                if(this.tokens[index].includes("\"") || this.tokens[index].includes("\'"))
-                {
-                    tempPotentialReadsString += this.tokens[index][1];
-                }
-                else{
-                    tempPotentialReadsString += this.tokens[index];
-                }
+				tempPotentialReadsString += this.tokens[index];
 
                 if(this.tokens[index+1] != ",")
                 {
@@ -441,35 +444,30 @@ export default class compiler {
         let returnVal = 0;
         let tempActionsString = "";
 
-        if(this.ActionSetStart_RegEx.test(this.tokens[index]))
+        if(this.tokens[index] == "[")
         {
             if((this.writeAction_RegEx.test(this.tokens[index+1]))&& this.tokens[index+2] == ",")
-            {
-                if((this.tokens[index+3] != undefined && this.tokens[index+3].length==1)&&this.directionAction_RegEx.test(this.tokens[index+3]) && this.tokens[index+4] == ",")
+            { //if valid replacement state character and comma
+                if(this.directionAction_RegEx.test(this.tokens[index+3]) && this.tokens[index+4] == ",")
                 {
-                    if(this.nextStateAction_RegEx.test(this.tokens[index+5]) && this.ActionSetEnd_RegEx.test(this.tokens[index+6]))
+                    if(this.nextStateAction_RegEx.test(this.tokens[index+5]) && this.tokens[index+6] == "]")
                     {
-                        if(this.tokens[index+1].includes("\"") || this.tokens[index+1].includes("\'"))
-                        {tempActionsString += this.tokens[index+1][1] + "\n";}
-                        else{tempActionsString += this.tokens[index+1] + "\n";}
-
-                        tempActionsString += this.tokens[index+3] + "\n";
-                        tempActionsString += this.tokens[index+5];
+						tempActionsString += this.tokens[index+1] + "\n" + this.tokens[index+3] + 
+						"\n" + this.tokens[index+5];
                         this.actions_Set.push(tempActionsString);
-                        returnVal = 2;
                         returnVal = 3;
                     }
                     else{
                         returnVal = -212;
                     }
                 }
+				/* might not be needed since we're forcing newstates for everything
                 else if(this.directionAction_RegEx.test(this.tokens[index+1]) && this.nextStateAction_RegEx.test(this.tokens[index+3]) && this.ActionSetEnd_RegEx.test(this.tokens[index+4]))
                 {
-                    tempActionsString += this.tokens[index+1] + "\n";
-                    tempActionsString += this.tokens[index+3];
+                    tempActionsString += this.tokens[index+1] + "\n" + this.tokens[index+3];
                     this.actions_Set.push(tempActionsString);
                     returnVal = 2;
-                }
+                }*/
                 else{
                     returnVal = -213;
                 }
@@ -489,5 +487,4 @@ export default class compiler {
         }
         return returnVal;
     }
-
 }//end of class

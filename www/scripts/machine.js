@@ -23,6 +23,18 @@ export default class machine {
 			document.getElementById('load').click();
 		});
     }
+	
+	getStates() { //these three mostly for canvas
+		return this.states;
+	}
+	
+	getStart() {
+		return this.start;
+	}
+	
+	getAccept() {
+		return this.accept;
+	}
 
 	playMachine()
 	{
