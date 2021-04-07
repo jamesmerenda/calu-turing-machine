@@ -14,9 +14,13 @@ export default class consoleDisplay {
 		this.console.value += value;
 	}
 
-    displayMachine(machine)
+    displayMachine(machine) //don't need \n for template literals 
     {
-        this.console.value =`Successful Machine Build!\ni: ${machine.input}\nb: ${machine.blank}\ns: ${machine.start}\na: ${machine.accept}\n`;
+        this.console.value =`Successful Machine Build!
+		i: ${machine.input}
+		b: ${machine.blank}
+		s: ${machine.start}
+		a: ${machine.accept}\n`;
 
         for(let i = 0; i < machine.numStates;i++)
         {
