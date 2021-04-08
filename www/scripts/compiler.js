@@ -20,32 +20,6 @@ export default class compiler {
 	nextStateAction_RegEx = /\S+/;
 	
     constructor() {
-
-        this.SINGLE_CHAR_TOKENS = /#|-|=|;|,|\[|\]/;
-        this.LOOK_AHEAD_TOKENS = /'|"/;
-        this.WHITESPACE_TOKENS = /\s/;
-        this.SEMICOLON = ";";
-        this.assignment_RegEx = /=/;
-        this.endStatement_RegEx = /;/;
-        this.comma_RegEx = /,/;
-
-        this.inputIdentifier_RegEx = /input/;
-        this.inputString_RegEx = /("|').+("|')/;
-
-
-        this.blankString_RegEx = /("|').("|')/;
-
-        this.startOrAcceptState_RegEx = /.+/;
-        this.stateIdentifier_RegEx = /-/;
-
-        this.stateName_RegEx = /\S+/;
-        this.potentialRead_RegEx = /('|").('|")/;
-        this.writeAction_RegEx = /(^.$)|(("|').("|'))/;
-        this.directionAction_RegEx = /(r|l)/;
-        this.nextStateAction_RegEx = /\S+/;
-        this.ActionSetStart_RegEx = /\[/;
-        this.ActionSetEnd_RegEx = /\]/;
-
         this.numTokens = 0;
         this.tokens = new Array();
 
@@ -58,20 +32,13 @@ export default class compiler {
         this.actions_Set = new Array();
         this.states_Set = new Array();
 
-        this.errorCode = 0;
-        this.errorState = "";
-        this.errorSymbol = "";
+        this.errorHandler = new errorHandler();
 
         this.userCode = undefined;
         this.loadCode = undefined;
         document.getElementById('load').addEventListener('click', () => this.loadCode());
     }
-
-    getErrorCode()
-    {
-        return this.errorCode;
-    }
-
+	
     scanTokens() //looking for tokens
     {
         let code = this.userCode.toLowerCase();
@@ -127,7 +94,7 @@ export default class compiler {
                     if(this.WHITESPACE_TOKENS.test(code[index]) && code[index] != " ")
                     {
                         stopScan = true;
-                        errorHandler.printBadEOL();
+                        this.errorHandler.printBadEOL();
                     }
                     tempToken += code[index];
                     index++;
@@ -136,7 +103,7 @@ export default class compiler {
                 if(index >= code.length && !stopScan)
                 {
                     stopScan = true;
-                    errorHandler.printBadEOF();
+                    this.errorHandler.printBadEOF();
                 }
                 else
                 {
