@@ -300,7 +300,7 @@ export default class compiler {
         if(this.tokens[index+1] == "=" && this.inputString_RegEx.test(this.tokens[index+2]) 
 			&& this.tokens[index+3] == ";")
         { //if set of tokens is =, a valid input string and ;
-            this.tempInputString = this.tokens[index+2].substr(1,this.tokens[index+2].length-2);
+            this.tempInputString = this.tokens[index+2];
         }
 		else {
 			this.errorHandler.printBadInputDef();
