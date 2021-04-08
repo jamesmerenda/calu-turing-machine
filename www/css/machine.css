@@ -159,9 +159,9 @@ input[type="file"] {
 #state_diagram {
     border: 1px solid black;
     background-color: lightgray;
-    width: 100%;
+    /*width: 100%;
     height: 100%;
-    /*border-bottom: 3px dotted #b3562e;*/
+    border-bottom: 3px dotted #b3562e;*/
 }
 
 .tape_view {

@@ -16,8 +16,14 @@ markupCompiler.loadCode = function () {
     if(!this.scanTokens()){ //while still tokens to scan
         machine = this.parseTokens();
     }
+<<<<<<< HEAD
     else{
         console.log("compiler failed");
+=======
+    else
+    {
+		console.log("compiler failed");
+>>>>>>> fac82f3f55b2663d62d637aa3d6bcce098e70361
         machineConsole.displayError(markupCompiler.getErrorCode());
     }
 

@@ -97,6 +97,10 @@ export default class errorHandler {
 	}
 
 	printBadStateSyntax(stateContext, symbolContext) { //don't need \n with template literals
+<<<<<<< HEAD
+=======
+		//-210
+>>>>>>> fac82f3f55b2663d62d637aa3d6bcce098e70361
 		this.display.setValue(`Potentially incorrect syntax for action set.
 		State: ${stateContext}
 		Symbols: ${symbolContext}
