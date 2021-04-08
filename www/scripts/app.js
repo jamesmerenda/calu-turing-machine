@@ -22,7 +22,7 @@ markupCompiler.loadCode = function () {
         machineConsole.displayError(markupCompiler.getErrorCode());
     }
 
-    if(machine == undefined)
+    if(machine == undefined) //should probably have a generic error here since it should have already thrown errors
         machineConsole.displayError(markupCompiler.getErrorCode(), markupCompiler.getErrorContext());
     else
     {

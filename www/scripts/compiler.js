@@ -317,7 +317,7 @@ export default class compiler {
         if(this.tokens[index+1] == "=" && this.blankString_RegEx.test(this.tokens[index+2])
 			&& this.tokens[index+3] == ";")
         { //if set of tokens is =, a single char and ;
-            this.tempBlankString = this.tokens[index+2][1];
+            this.tempBlankString = this.tokens[index+2];
             stopParse = false;
         }
 		else {
