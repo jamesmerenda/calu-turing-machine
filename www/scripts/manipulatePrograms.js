@@ -3,7 +3,7 @@ var programs = [
 [
 'Binary Increment',
 
-`input = "1011 ";
+`input = "1011";
 blank = " ";
 start = moveright;
 accept = finish;
@@ -19,7 +19,7 @@ accept = finish;
 [
 'Palindrome',
 
-`input = "0110 ";
+`input = "0110";
 blank = " ";
 start = start;
 accept = accept;
@@ -37,82 +37,59 @@ accept = accept;
        " " [" ", l, match1];
 
 -match0 0   [" ", l, back]
-	1   [1, l, accept]
+	1   [1, l, reject]
 	" " [" ", l, accept];
 
 -match1 1   [" ", l, back]
-	0   [0, l, accept]
+	0   [0, l, reject]
 	" " [" ", l, accept];
 
 -back 0   [0, l, back]
       1   [1, l, back]
       " " [" ", r, start];
 
+-reject
 -accept;`
 ],
 [
 'Binary Addition',
 
-`input = "1011+11001";
+`input = "110110 101011";
 blank = " ";
-start = right;
-accept = done;
+start = q0;
+accept = qf;
 
--right 
-       0   [0, r, right]
-       1   [1, r, right]
-       +   [+, r, right]
-       " " [" ", l, read];
+-q0 " " [" ", r, q1]
+	0	[0, r, q0]
+	1	[1, r, q0];
 
--read 0 [c, l, have0]
-      1 [c, l, have1]
-      + [" ", l, rewrite];
+-q1 " " [0, l, q2]
+	0	[0, r, q1]
+	1	[1, r, q1];
 
--have0 0 [0, l, have0]
-       1 [1, l, have0]
-       + [+, l, add0];
+-q2 0 	[" ", l, q3x]
+	1	[" ", l, q3y]
+	" "	[" ", l, q7];
 
--have1 0 [0, l, have1]
-       1 [1, l, have1]
-       + [+, l, add1];
+-q3x " " [" ", l, q4x]
+	 0	 [0, l, q3x]
+	 1	 [1, l, q3x];
 
--add0 0   [O, r, back0]
-      " " [O, r, back0]
-      1   [i, r, back0]
-      o   [i, l, add0]
-      i   [i, l, add0];
+-q3y " " [" ", l, q4y]
+	 0	 [0, l, q3y]
+	 1	 [1, l, q3y];
 
--add1 0   [I, r, back1]
-      " " [I, r, back1]
-      1   [o, l, carry]
-      o   [o, l, add1]
-      i   [i, l, add1];
+-q4x 0   [x, r, q0]
+	 1 	 [y, r, q0]
+	 " " [x, r, q0]
+	 x	 [x, l, q4x]
+	 y	 [y, l, q4x]
 
--carry 0   [1, r, back1]
-       " " [1, r, back1]
-       1   [0, l, carry];
+-q4y 0	 [1,]
 
--back0 0 [0, r, back0]
-       1 [1, r, back0]
-       o [o, r, back0]
-       i [i, r, back0]
-       + [+, r, back0]
-       c [1, l, read];
+-q7
 
--back1 0 [0, r, back0]
-       1 [1, r, back0]
-       o [o, r, back0]
-       i [i, r, back0]
-       + [+, r, back0]
-       c [1, l, read];
-
--rewrite o   [0, l, rewrite]
-         i   [1, l, rewrite]
-         0   [0, l, rewrite]
-         1   [1, l, rewrite]
-         " " [" ", r, done];
-
--done;`
+-qf;`
 ],
 [
 'Binary Pong',
@@ -151,12 +128,17 @@ accept = never;
 -never;`
 ],
 [
-'Program 6',
+'Binary Complement',
 
-`This is content associated with Program 6.
-This is more of the program body.
-Probably more here.
-The end of this program.`
+`input = "1011";
+blank = " ";
+start = q0;
+accept = qf;
+
+-q0 1   [0, r, q0]
+    0   [1, r, q0]
+    " " [" ", l, qf];
+-qf;`
 ],
 [
 'Program 7',
