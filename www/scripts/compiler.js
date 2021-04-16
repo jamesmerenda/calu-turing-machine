@@ -156,9 +156,8 @@ export default class compiler {
 		return;
 	}
 
-    parseTokens()
+    parseTokens(turingMachine)
     {
-        let turingMachine = undefined;
         let index = 0;
         let stopParse = false;
         let addState = false;
@@ -169,7 +168,7 @@ export default class compiler {
         
         let tempState = new Array();
 
-        let tempErrorCode = undefined;
+        let tempErrorCode = 0;
 
         while(index < this.numTokens && !stopParse)
         {
@@ -179,7 +178,6 @@ export default class compiler {
                     stopParse = this.match_Input(index);
                     if(!stopParse)
                     {
-                        console.log(this.tempInputString);
                         index+=3;
                     }
                     break;
@@ -199,7 +197,6 @@ export default class compiler {
                     stopParse = this.match_StartOrAcceptState(index);
                     if(!stopParse)
                     {
-                        console.log("accept or start");
                         index+=3;
                     }
                     break;
@@ -278,21 +275,83 @@ export default class compiler {
             index++;
         }
 
+        if(this.tempInputString == "")
+        {
+            stopParse = true;
+            tempErrorCode = -5550;
+        }
+        else if(this.tempBlankString == "")
+        {
+            stopParse = true;
+            tempErrorCode = -5551;
+        }
+        else if(this.tempStartStateString == "")
+        {
+            stopParse = true;
+            tempErrorCode = -5552;
+        }
+        else if(this.tempAcceptStateString == "")
+        {
+            stopParse = true;
+            tempErrorCode = -5553;
+        }
+        else if(!this.checkExistingStartState())
+        {
+            console.log("no start good");
+            stopParse = true;
+            tempErrorCode = -5554;
+        }
+        else if(!this.checkExistingAcceptState())
+        {
+            stopParse = true;
+            tempErrorCode = -5555;
+        }
+
         if(!stopParse)
         {
 			if(this.states_Set[0] != null)
 			{
                 console.log(this.tempInputString);
 				updateTape(this.tempInputString, this.tempBlankString);
-				turingMachine = new machine(this.tempInputString, this.tempBlankString,this.tempStartStateString, this.tempAcceptStateString, this.states_Set);
-				this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
+				turingMachine.createMachine(this.tempInputString, this.tempBlankString,this.tempStartStateString, this.tempAcceptStateString, this.states_Set);                
+                this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
 				this.states_Set = new Array();
 			}
 			else{this.errorCode = -204;}//no states defined
 		}
 
-        return turingMachine;
+        return tempErrorCode;
     }
+
+    checkExistingStartState()
+    {
+        let i = 0;
+        let exists = false;
+        while( i < this.states_Set.length && !exists)
+        {
+            console.log(`${this.states_Set[i][0]}:${this.tempStartStateString}`);
+            if(this.states_Set[i][0] == this.tempStartStateString)
+                exists = true;
+            i++;
+        }
+        return exists;
+    }
+
+    checkExistingAcceptState()
+    {
+        let i = 0;
+        let exists = false;
+        while( i < this.states_Set.length && !exists)
+        {
+            if(this.states_Set[i][0] == this.tempAcceptStateString)
+                exists = true;
+            i++;
+        }
+        
+        return exists;
+    }
+
+
 
     match_Input(index) //look for a valid input string
     {
@@ -394,8 +453,7 @@ export default class compiler {
             }
             else
             {
-                console.log("no pot reads");
-                returnVal = -209;
+                returnVal = -209;//no potential reads found
             }
         }
         if(returnVal < 0)
@@ -428,13 +486,6 @@ export default class compiler {
                         returnVal = -212;
                     }
                 }
-				/* might not be needed since we're forcing newstates for everything
-                else if(this.directionAction_RegEx.test(this.tokens[index+1]) && this.nextStateAction_RegEx.test(this.tokens[index+3]) && this.ActionSetEnd_RegEx.test(this.tokens[index+4]))
-                {
-                    tempActionsString += this.tokens[index+1] + "\n" + this.tokens[index+3];
-                    this.actions_Set.push(tempActionsString);
-                    returnVal = 2;
-                }*/
                 else{
                     returnVal = -213;
                 }
@@ -450,7 +501,7 @@ export default class compiler {
 
         if(returnVal < 0)
         {
-            this.setErrorContext();
+            //this.setErrorContext();
         }
         return returnVal;
     }
