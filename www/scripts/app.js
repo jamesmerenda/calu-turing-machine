@@ -1,7 +1,7 @@
 import layout from "./layout.js";
 import compiler from "./compiler.js";
 import consoleDisplay from "./consoleDisplay.js";
-import stateDiagram from "./stateDiagram.js";
+//import stateDiagram from "./stateDiagram.js";
 
 let machine = undefined;
 
@@ -28,7 +28,7 @@ markupCompiler.loadCode = function () {
     {
         machineConsole.displayMachine(machine);
 		
-		let diagram = new stateDiagram(machine.getStates(), machine.getStart(), machine.getAccept());
-		diagram.drawDiagram();
+		//let diagram = new stateDiagram(machine.getStates(), machine.getStart(), machine.getAccept());
+		//diagram.drawDiagram();
 	}
 };
