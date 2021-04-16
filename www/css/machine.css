@@ -93,6 +93,7 @@ input[type="file"] {
     background-color: #efefef;
     font-family: sans-serif;
     color: black;
+    text-shadow: none;
     outline: .25px solid #767676;
 }
 

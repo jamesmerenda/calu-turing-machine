@@ -3,23 +3,42 @@ var programs = [
 [
 'Binary Increment',
 
-`input = "1011";
+`# Binary Increment - takes a binary number and increments 
+#                    it by 1.
+# Input - a single binary number without spaces.
+# Output - the sum of the binary number plus 1.
+
+input = "1011";
 blank = " ";
 start = moveright;
 accept = finish;
 
+# move to the end of the binary number.
 -moveright      1   [1, r, moveright]
     		0   [0, r, moveright]
     		" " [" ", l, carry];
+
+# increment rightmost digit and update following digits.
 -carry 		1   [0, l, carry]
-		0   [1, l, finish]
-		" " [1, l, finish];
+		0   [1, l, reset]
+		" " [1, l, reset];
+
+# set read head to first item of result.
+-reset 		" "	[" ", r, finish]
+		0	[0, l, reset]
+		1	[1, l, reset];
+
 -finish;`
 ],
 [
 'Palindrome',
 
-`input = "0110";
+`# Palindrome - accepts binary palindromes.
+# Input - a binary number that mirrors in the middle, 
+#         including an empty value.
+# Output - none.
+
+input = "0110";
 blank = " ";
 start = start;
 accept = accept;
@@ -48,74 +67,138 @@ accept = accept;
       1   [1, l, back]
       " " [" ", r, start];
 
--reject
+-reject;
 -accept;`
 ],
 [
 'Binary Addition',
 
-`input = "110110 101011";
+`# Binary Addition - takes two binary numbers and sums 
+#                   them together.
+# Input - two binary numbers separated by a space.
+# Output - the sum of the two binary numbers entered.
+
+input = "110110 101011";
 blank = " ";
 start = q0;
 accept = qf;
 
+# move to the right until a blank space is encountered.
 -q0 " " [" ", r, q1]
-	0	[0, r, q0]
-	1	[1, r, q0];
+    0	[0, r, q0]
+    1	[1, r, q0]
+    x	[x, r, q0]
+    y	[y, r, q0];
 
--q1 " " [0, l, q2]
-	0	[0, r, q1]
-	1	[1, r, q1];
+# move right until another space is encountered.
+-q1 " " [" ", l, q2]
+    0	[0, r, q1]
+    1	[1, r, q1];
 
--q2 0 	[" ", l, q3x]
-	1	[" ", l, q3y]
-	" "	[" ", l, q7];
+# when a blank space is encountered, move left and remove
+# the first digit seen or a blank space is encountered.
+-q2 0 	[" ", l, q3x]     # branching path for 0
+    1	[" ", l, q3y]     # branching path for 1
+    " "	[" ", l, q7];     # cleanup
 
+# move left until a blank space is encountered, ignoring 
+# 0 and 1.
+# branching path for 0.
 -q3x " " [" ", l, q4x]
-	 0	 [0, l, q3x]
-	 1	 [1, l, q3x];
+     0	 [0, l, q3x]
+     1	 [1, l, q3x];
 
+# move left until a blank space is encountered, ignoring 
+# 0 and 1.
+# branching path for 1.
 -q3y " " [" ", l, q4y]
-	 0	 [0, l, q3y]
-	 1	 [1, l, q3y];
+     0	 [0, l, q3y]
+     1	 [1, l, q3y];
 
+# accepts the rightmost digit from the first binary number.
+# if the number is a 0, it is replaced with an x.
+# if the number is a 1, it is replaced with a y.
+# if a blank space is encountered, add an x symbol.
+# this occurs all while ignoring x and y symbols.
 -q4x 0   [x, r, q0]
-	 1 	 [y, r, q0]
-	 " " [x, r, q0]
-	 x	 [x, l, q4x]
-	 y	 [y, l, q4x]
+     1 	 [y, r, q0]
+     " " [x, r, q0]
+     x	 [x, l, q4x]
+     y	 [y, l, q4x];
 
--q4y 0	 [1,]
+# accepts the rightmost digit from the first binary number.
+# if the number is a 0, it is replaced with a 1.
+# if the number is a 1, a carry occurs and maintains the same
+# state until a 0 or blank space is encountered and write 1.
+# this occurs all while ignoring x and y symbols.
+-q4y 0	 [1, l, q5]
+     1	 [0, l, q4y]
+     " " [1, r, q5]
+     x	 [x, l, q4y]
+     y 	 [y, l, q4y];
 
--q7
+# move to the right until a symbol is encountered, then move
+# left.
+-q5 " "	[" ", l, q6]
+    0	[0, r, q5]
+    1	[1, r, q5]
+    x	[x, l, q6]
+    y 	[y, l, q6];
+
+# replace 0 with x and 1 with y, then return to repeat the cycle.
+-q6 0	[x, r, q0]
+    1	[y, r, q0];
+
+# clean up symbols and return to the beginning of the binary sum
+# calculated.
+-q7 x	[0, l, q7]
+    y	[1, l, q7]
+    " " [" ", r, qf]
+    0	[0, l, q7]
+    1	[1, l, q7];
 
 -qf;`
 ],
 [
 'Binary Pong',
 
-`input = "0 1";
+`# Binary Pong - the read head bounces back and forth.
+# Input - a binary digit and another binary digit separated by a space.
+# Output - a really intense game of table tennis.
+
+input = "0 1";
 blank = " ";
 start = start;
 accept = never;
 
+# first serve on the left side.
 -start 0   [1, r, ping]
        1   [0, r, ping];
 
+# receives the pitch and passes back.
 -ping " " [" ", r, ping]
       1   [0, l, pong]
       0   [1, l, pong];
 
+# also receives and hits back.
 -pong " " [" ", l, pong]
       1	  [0, r, ping]
       0	  [1, r, ping];
 
+# the game will never end
 -never;`
 ],
 [
 'The Classic',
 
-`input = " ";
+`# The Classic - The first example machine given by Alan Turing
+#               in his 1936 paper:
+#               "On Computable Numbers, with an 
+#               Application to the Entscheidungsproblem".
+# Input - none
+# Output - an endless sequence of 0 1 0 1...
+
+input = " ";
 blank = " ";
 start = b;
 accept = never;
@@ -130,32 +213,24 @@ accept = never;
 [
 'Binary Complement',
 
-`input = "1011";
+`# Binary Complement - accepts a binary number and outputs the complement of it.
+# Input - a binary number.
+# Output - the binary complement of the input.
+
+input = "1011";
 blank = " ";
 start = q0;
 accept = qf;
 
 -q0 1   [0, r, q0]
     0   [1, r, q0]
-    " " [" ", l, qf];
+    " " [" ", l, q1];
+-q1 1	[1, l, q1]
+	0	[0, l, q1]
+	" " [" ", r, qf];
+
 -qf;`
-],
-[
-'Program 7',
-
-`This is content associated with Program 7.
-This is more of the program body.
-Probably more here.
-The end of this program.`
-],
-[
-'Program 8',
-
-`This is content associated with Program 8
-This is more of the program body.
-Probably more here.
-The end of this program.`
-],
+]
 
 ];
 

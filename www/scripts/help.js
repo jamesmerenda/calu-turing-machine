@@ -27,18 +27,6 @@ document.getElementById('help-machine').addEventListener('click', (event) => {
 	}
 });
 
-//information button display in state diagram
-document.getElementById('help-state-diagram').addEventListener('click', (event) => {
-	if(helpWindowStateDiagram.style.display === 'none')
-	{
-		helpWindowStateDiagram.style.display = 'block';
-		document.getElementById('help-state-diagram').innerHTML = '&#x2715;';
-	} else {
-		helpWindowStateDiagram.style.display = 'none';
-		document.getElementById('help-state-diagram').innerHTML = '&#x1F6C8;';
-	}
-});
-
 //information button display in console
 document.getElementById('help-console').addEventListener('click', (event) => {
 	if(helpWindowConsole.style.display === 'none')
