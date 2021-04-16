@@ -1,11 +1,8 @@
 import layout from "./layout.js";
 import compiler from "./compiler.js";
 import consoleDisplay from "./consoleDisplay.js";
-<<<<<<< HEAD
 import machine from "./machine.js";
-=======
-//import stateDiagram from "./stateDiagram.js";
->>>>>>> 3bf2503a73b304c750a66aa2dc6b997708bc4e74
+
 
 let turingMachine = new machine();
 
