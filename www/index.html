@@ -21,7 +21,7 @@
 			</span>
 			<div class="main">
 				<div class='options'>
-					<button class='option_buttons' id='toggle_layout'>Console Position</button>
+					<!--<button class='option_buttons' id='toggle_layout'>Console Position</button>-->
 					<button class='option_buttons' id='toggle_console'>Toggle Console</button>
 					<button class='option_buttons' id='toggle_editor'>Toggle Editor</button>
 					<button class='option_buttons' id='toggle_machine'>Toggle Machine</button>
@@ -93,14 +93,16 @@
 						</div>
 					</div>
 					<ul id='selection_list' style='display: none;'>
-						<lh>Binary Manipulation</lh>
+						<lh>Language Acceptor</lh>
 						<li id='selection_option'>Palindrome</li>
 						<li id='selection_option'>Binary Pong</li>
 						<li id='selection_option'>The Classic</li>
-						<lh>Binary Arithmetic</lh>
+						<li id='selection_option'>wcw, where w is an element of {a,b}*</li>
+						<lh>Language Transducer</lh>
 						<li id='selection_option'>Binary Increment</li>
 						<li id='selection_option'>Binary Addition</li>
 						<li id='selection_option'>Binary Complement</li>
+						<li id='selection_option'>x-y, where x is greater than y</li>
 					</ul>
 					<div class ='editor__text'>
 						<textarea class='editor__text__line-numbers' id='line-numbers' placeholder='1' readonly="true"></textarea>
@@ -125,22 +127,6 @@
 					</div>
 				</div>
 				<div class='machine' id='machine'>
-					<!--
-					<div class='state_diagram_view'>
-						<div class='info_button alternate_button' id='help-state-diagram'>
-							&#x1F6C8;
-						</div>
-						<div class='help-box' id='help-state-diagram-message' style='display: none;'>
-							<h3><i>What is this?</i></h3>
-							<hr>
-							This is the <i>State Diagram</i>.<br><br>
-							Transitions based on whats compiled will be generated here in a convenient graphic.
-						</div>
-						<canvas id='state_diagram' width = "523" height = "158">
-						
-						</canvas>		
-					</div>
-					-->
 					<div class='tape_view'>
 						<div class="t-machine">
 							<div class='info_button' id='help-machine'>
@@ -272,6 +258,8 @@
 								<button class='machine_buttons' id='play'>Play</button>
 								<button class='machine_buttons' id='pause'>Pause</button>
 								<button class='machine_buttons' id='reset'>Reset</button>
+								<button class='machine_buttons' onclick='moveRight()'>Move Right</button>
+								<button class='machine_buttons' onclick='moveLeft()'>Move Left</button>
 							</div>
 						</center>
 					</div>
