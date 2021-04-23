@@ -10,13 +10,13 @@ export default class compiler {
 	WHITESPACE_TOKENS = /\s/;
 	
 	inputString_RegEx = /.+/;
-	blankString_RegEx = /^.{1}$/; //forces a single char
+	blankString_RegEx = /^.$/; //forces a single char
 	startOrAcceptState_RegEx = /.+/;
 
 	stateName_RegEx = /\S+/;
-	potentialRead_RegEx = /^.{1}$/;
-	writeAction_RegEx = /^.{1}$/;
-	directionAction_RegEx = /^(r|l){1}$/;
+	potentialRead_RegEx = /^.$/;
+	writeAction_RegEx = /^.$/;
+	directionAction_RegEx = /^(r|l)$/;
 	nextStateAction_RegEx = /\S+/;
 	
     constructor() {
@@ -36,6 +36,7 @@ export default class compiler {
 
         this.userCode = undefined;
         this.loadCode = undefined;
+		
         document.getElementById('load').addEventListener('click', () => this.loadCode());
     }
 	
@@ -158,6 +159,7 @@ export default class compiler {
 
     parseTokens(turingMachine)
     {
+        //let turingMachine = undefined;
         let index = 0;
         let stopParse = false;
         let addState = false;
@@ -214,10 +216,12 @@ export default class compiler {
                                 index += (tempNumPotentialReads*2)-1;
                                 tempNumPotentialReads = 0;
 
-                                tempErrorCode = tempNumActions = this.match_ActionSet(index);
-                                if(tempNumActions > 0)
+                                stopParse = this.match_ActionSet(index);
+                                if(!stopParse)
                                 {
-                                    index+=(tempNumActions*2)+1;
+                                    //index+=(tempNumActions*2)+1;
+									index += 7;
+									
                                     if(this.tokens[index] == ";")
                                     {
                                         addState = true;
@@ -227,8 +231,6 @@ export default class compiler {
                                     }
                                 }
                                 else{
-                                    this.errorCode = tempErrorCode;
-                                    stopParse = true;
                                     console.log("expected action set");
                                 }
 
@@ -260,16 +262,16 @@ export default class compiler {
                     }
                     else
                     {
-                        this.errorCode = tempErrorCode;
+                        this.errorHandler.printBadStateName();
                         console.log("expected alphanumeric statename");
-                        stopParse = true;
                     }
                     break;
 					//this is the end of the - case    
 					
 				default:
-					this.errorCode = -214;
+					this.errorHandler.printBadStartLine();
 					stopParse = true;
+					console.log("how did you get here");
 					break;
             }
             index++;
@@ -316,8 +318,17 @@ export default class compiler {
 				turingMachine.createMachine(this.tempInputString, this.tempBlankString,this.tempStartStateString, this.tempAcceptStateString, this.states_Set);                
                 this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
 				this.states_Set = new Array();
+        if(!stopParse) //sanity check this
+        {
+			if(turingMachine != undefined) {
+				turingMachine.deletePrevious(turingMachine);
 			}
-			else{this.errorCode = -204;}//no states defined
+			
+			console.log("about to build new machine");
+			updateTape(this.tempInputString, this.tempBlankString);
+			turingMachine = new machine(this.tempInputString, this.tempBlankString,this.tempStartStateString, this.tempAcceptStateString, this.states_Set);
+			this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
+			this.states_Set = new Array();
 		}
 
         return tempErrorCode;
@@ -465,8 +476,8 @@ export default class compiler {
 
     match_ActionSet(index)
     {
-
-        let returnVal = 0;
+		let stopParse = false;
+        //let returnVal = 0;
         let tempActionsString = "";
 
         if(this.tokens[index] == "[")
@@ -480,19 +491,22 @@ export default class compiler {
 						tempActionsString += this.tokens[index+1] + "\n" + this.tokens[index+3] + 
 						"\n" + this.tokens[index+5];
                         this.actions_Set.push(tempActionsString);
-                        returnVal = 3;
+                        //returnVal = 3;
                     }
                     else{
-                        returnVal = -212;
-                    }
+                        this.errorHandler.printBadNextStateAction(this.tokens[index+5], this.tokens[index+6]);
+						stopParse = true;
+					}
                 }
                 else{
-                    returnVal = -213;
+                    this.errorHandler.printBadDirection();
+					stopParse = true;
                 }
             }
             else
             {
-                returnVal = -211;
+                this.errorHandler.printBadWriteAction(this.tokens[index+1], this.tokens[index+2]);
+				stopParse = true;
             }
         }
         else{
@@ -502,7 +516,10 @@ export default class compiler {
         if(returnVal < 0)
         {
             //this.setErrorContext();
+            this.errorHandler.printNoBracket();
+			stopParse = true;
         }
-        return returnVal;
+		
+        return stopParse;
     }
 }//end of class

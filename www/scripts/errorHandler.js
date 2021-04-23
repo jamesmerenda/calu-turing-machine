@@ -95,6 +95,10 @@ export default class errorHandler {
 		//-209
 		this.display.setValue(`Expected list of potential reads for state: ${errorContext}`);
 	}
+	
+	printNoBracket() {
+		this.display.setValue("Missing opening bracket for action set");
+	}
 
 	printBadStateSyntax(stateContext, symbolContext) { //don't need \n with template literals
 		this.display.setValue(`Potentially incorrect syntax for action set.
@@ -102,19 +106,24 @@ export default class errorHandler {
 		Symbols: ${symbolContext}
 		Expected: [char, (l|r), state name]`);
 	}
+		
+	printBadWriteAction(writeAction, comma)	{ //21l
+		this.setDisplay.setValue(`Expected a valid write action and a comma
+		Write action: ${writeAction}
+		Comma: ${comma}`)
+	}
+		
+	printBadNextStateAction(nextState, bracket) { //212
+		this.setDisplay.setValue(`Expected a valid state name and a closing bracket
+		State name: ${nextState}
+		Bracket: ${bracket}`);
+	}
+	
+	printBadDirection() { //213
+		this.setDisplay.setValue("Expected a singular r or l");
+	}
 
-	/* rewrite once i figure out context
-	case -211:
-		this.console.value = `Error Code: ${errorCode}\n`;
-		break;
-	case -212:
-		this.console.value = `Error Code: ${errorCode}\n`;
-		break;
-	case -213:
-		this.console.value = `Error Code: ${errorCode}\n`;
-		break;
-	case -214:
-		this.console.value = `Error Code: ${errorCode}\n`;
-		break;
-	*/
+	printBadStartLine() { //214
+		this.setDisplay.setValue("Current token is not a valid line start");
+	}	
 }

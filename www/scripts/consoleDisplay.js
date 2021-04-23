@@ -24,6 +24,11 @@ export default class consoleDisplay {
 
         //console.log(machine.states);
         //console.log(machine.states[0][1].length);
+        this.console.value =`Successful Machine Build!
+		i: ${machine.input}
+		b: "${machine.blank}"
+		s: ${machine.start}
+		a: ${machine.accept}\n`;
 
         for(let i = 0; i < machine.numStates;i++)
         {

@@ -36,6 +36,19 @@ export default class machine {
         }
 		this.currentState = this.findState(this.start);
 	}
+		//if reset button is clicked, simulate a click on the load button
+	/*
+	deletePrevious(machine) {
+		document.getElementById('step').removeEventListener('click', this.findTransition());
+		document.getElementById('play').removeEventListener('click', this.playMachine());
+		document.getElementById('pause').removeEventListener('click', this.stopTheBus());
+		document.getElementById('reset').removeEventListener('click', function(){
+			document.getElementById('load').click()});
+			
+		for(let i in machine) {
+			delete machine[i];
+		}		
+	} */
 	
 	getStates() { //these three mostly for canvas
 		return this.states;
