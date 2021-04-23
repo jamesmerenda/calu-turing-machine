@@ -318,6 +318,8 @@ export default class compiler {
 				turingMachine.createMachine(this.tempInputString, this.tempBlankString,this.tempStartStateString, this.tempAcceptStateString, this.states_Set);                
                 this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
 				this.states_Set = new Array();
+            }
+        }
         if(!stopParse) //sanity check this
         {
 			if(turingMachine != undefined) {
@@ -477,7 +479,7 @@ export default class compiler {
     match_ActionSet(index)
     {
 		let stopParse = false;
-        //let returnVal = 0;
+        let returnVal = 0;
         let tempActionsString = "";
 
         if(this.tokens[index] == "[")
@@ -522,4 +524,5 @@ export default class compiler {
 		
         return stopParse;
     }
+
 }//end of class
