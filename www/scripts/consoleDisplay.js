@@ -25,24 +25,12 @@ export default class consoleDisplay {
 
     displayMachine(machine) 
     {
-        this.console.value =`Successful Machine Build!\n\n`;
-        this.console.value +=`input:\t\t\t\"${machine.input}\"\n`;
-        this.console.value +=`blank character:\t\"${machine.blank}\"\n`;
-        this.console.value +=`starting state:\t\t${machine.start}\n`;
-        this.console.value +=`accepting state:\t${machine.accept}\n\n`;
-
-<<<<<<< HEAD
-        //console.log(machine.states);
-        //console.log(machine.states[0][1].length);
-/*
-=======
         this.console.value =`Successful Machine Build!
 		i: ${machine.input}
 		b: "${machine.blank}"
 		s: ${machine.start}
 		a: ${machine.accept}\n`;
 
->>>>>>> c45789e6842434812ab203d19b60948013d5b155
         for(let i = 0; i < machine.numStates;i++)
         {
             let numOfValues = 0;
@@ -63,7 +51,7 @@ export default class consoleDisplay {
                 numOfValues++;
             }
         }
-        */
+
     }
 
     machineIsStuckInAStateThatDoesNotExist(stateStuckIn, lastState)

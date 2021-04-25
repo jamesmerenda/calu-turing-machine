@@ -3,18 +3,14 @@ import compiler from "./compiler.js";
 import consoleDisplay from "./consoleDisplay.js";
 import machine from "./machine.js";
 
-<<<<<<< HEAD
-
-=======
 let turingMachine = new machine();
->>>>>>> c45789e6842434812ab203d19b60948013d5b155
 
-window.machine = undefined;
+//window.machine = undefined;
 let machineLayout = new layout();
 let markupCompiler = new compiler();
 let machineConsole = new consoleDisplay();
 
-let turingMachine = new machine(machineConsole);
+//let turingMachine = new machine(machineConsole);
 
 var appError;//temporary fix
 

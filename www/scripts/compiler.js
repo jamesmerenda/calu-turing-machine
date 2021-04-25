@@ -36,12 +36,8 @@ export default class compiler {
 
         this.userCode = undefined;
         this.loadCode = undefined;
-<<<<<<< HEAD
-
         this.editRunning = false;
-=======
-		
->>>>>>> c45789e6842434812ab203d19b60948013d5b155
+
         document.getElementById('load').addEventListener('click', () => this.loadCode());
         document.getElementById('edit_current_machine').addEventListener('click', () => this.setEditFlagAndCompile());
     }
@@ -82,14 +78,9 @@ export default class compiler {
                     do{
                         index++;
                     }while(index < code.length && code[index] != '\n');
-<<<<<<< HEAD
-                    if(code[index] == '\n')
-                    {
-                        this.lineNumber++;
-                    }
-=======
+
 					lineNumber++; //since index increments again after
->>>>>>> c45789e6842434812ab203d19b60948013d5b155
+
                 }
                 else //single char token
                 {
@@ -146,17 +137,11 @@ export default class compiler {
                     tempToken = "";
                     activeToken = false;
                 }
-<<<<<<< HEAD
-                if(code[index] == '\n')
-                {
-                    this.lineNumber++;
-                }
-=======
 				
 				if(code[index] == "\n") { //if new line
 					lineNumber++;
 				}
->>>>>>> c45789e6842434812ab203d19b60948013d5b155
+
             }
 			
             else{
@@ -262,15 +247,13 @@ export default class compiler {
                                         tempNumPotentialReads = this.match_PotentialReads(index);
                                     }
                                 }
-<<<<<<< HEAD
+
                                 else{
                                     this.errorCode = tempErrorCode;
                                     stopParse = true;
                                     //console.log("expected action set");
                                 }
 
-=======
->>>>>>> c45789e6842434812ab203d19b60948013d5b155
                             }
                             if(tempNumPotentialReads < 0)
                             { //update this
@@ -297,15 +280,14 @@ export default class compiler {
                             addState = false;
                         }
                     }
-<<<<<<< HEAD
+
                     else
                     {
                         this.errorCode = tempErrorCode;
                         //console.log("expected alphanumeric statename");
                         stopParse = true;
                     }
-=======
->>>>>>> c45789e6842434812ab203d19b60948013d5b155
+
                     break;
 					//this is the end of the - case    
 					
@@ -352,7 +334,6 @@ export default class compiler {
 
         if(!stopParse) //sanity check this
         {
-<<<<<<< HEAD
 			if(this.states_Set[0] != null)
 			{
                     if(this.editRunning && this.checkEdited(turingMachine))
@@ -369,13 +350,6 @@ export default class compiler {
                     this.states_Set = new Array();
 			}
 			else{this.errorCode = -204;}//no states defined
-=======
-			console.log("about to build new machine");
-			updateTape(this.tempInputString, this.tempBlankString);
-			turingMachine.createMachine(this.tempInputString, this.tempBlankString,this.tempStartStateString, this.tempAcceptStateString, this.states_Set);
-			this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
-			this.states_Set = new Array();
->>>>>>> c45789e6842434812ab203d19b60948013d5b155
 		}
 
         return tempErrorCode;
@@ -561,15 +535,6 @@ export default class compiler {
         return stopParse;
     }
 
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
     checkEdited(tm)
     {
         let retVal = false;
@@ -600,6 +565,3 @@ export default class compiler {
         return retVal;
     }
 }//end of class
-=======
-}//end of class
->>>>>>> c45789e6842434812ab203d19b60948013d5b155
