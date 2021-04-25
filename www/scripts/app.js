@@ -27,24 +27,5 @@ markupCompiler.loadCode = function () {
     else
     {
         machineConsole.displayMachine(turingMachine);
-        //machineConsole.displayError(markupCompiler.getErrorCode());
     }
-	
-	/*
-	if(!this.scanTokens()){ //while still tokens to scan
-        window.machine = this.parseTokens(window.machine);
-
-    }
-    else{
-		console.log("compiler failed");
-        
-    }
-	
-    if(window.machine != undefined) {
-        machineConsole.displayMachine(window.machine);
-	}
-    else
-    {
-		machineConsole.setValue("Machine was not created successfully, view errors above");
-	}*/
 };

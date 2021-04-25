@@ -22,8 +22,6 @@ export default class consoleDisplay {
         this.console.value +=`starting state:\t\t${machine.start}\n`;
         this.console.value +=`accepting state:\t${machine.accept}\n\n`;
 
-        //console.log(machine.states);
-        //console.log(machine.states[0][1].length);
         this.console.value =`Successful Machine Build!
 		i: ${machine.input}
 		b: "${machine.blank}"

@@ -156,9 +156,4 @@ export default class layout{
             this.machineShown = !this.machineShown;
         }
     }
-
-    toggleLayout() {
-        //nothing yet
-    }
-
 }
