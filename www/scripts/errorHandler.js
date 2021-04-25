@@ -4,6 +4,7 @@ export default class errorHandler {
 	
 	constructor() {
 		this.display = new consoleDisplay();
+		this.errorLineNumber = -1;
 		//double check this is correct
 		
 		/*

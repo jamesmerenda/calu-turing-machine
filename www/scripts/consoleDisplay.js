@@ -5,9 +5,18 @@ export default class consoleDisplay {
         document.getElementById('clearConsole').addEventListener('click', () => this.clearConsole());
     }
 
+    displayErrorTemp(errorNum){
+        this.console.value = `error: ${errorNum}`;
+    }
+
     clearConsole()
     {
         this.console.value = "";
+    }
+
+    testFunction()
+    {
+        this.console.innerHTML = "it works";
     }
 	
 	setValue(value) {
@@ -24,7 +33,7 @@ export default class consoleDisplay {
 
         //console.log(machine.states);
         //console.log(machine.states[0][1].length);
-
+/*
         for(let i = 0; i < machine.numStates;i++)
         {
             let numOfValues = 0;
@@ -45,5 +54,20 @@ export default class consoleDisplay {
                 numOfValues++;
             }
         }
+        */
+    }
+
+    machineIsStuckInAStateThatDoesNotExist(stateStuckIn, lastState)
+    {
+        this.console.value = `The machine is stuck in -${stateStuckIn} (Transistioned to from ${lastState})
+        Possible causes:
+                        1. -${stateStuckIn} does not have any transition functions defined for the symbol under read head`;
+    }
+
+    stateHasNoAvailableTransitions(stateStuckIn, currentRead)
+    {
+        this.console.value = `The machine is stuck in -${stateStuckIn}
+        Possible causes:
+                        1. -${stateStuckIn} does not have any transition functions defined for ${currentRead}`;
     }
 }

@@ -134,7 +134,7 @@ input[type="file"] {
     height: 100%;
     resize: none;
     border: 1px solid black;
-    overflow-wrap:normal;
+    word-wrap:none;
     background-color:whitesmoke;
 }
 

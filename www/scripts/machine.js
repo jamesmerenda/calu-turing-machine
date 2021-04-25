@@ -1,8 +1,9 @@
 import "./mapper.js";
 import "./animation.js";
+import consoleDisplay from "./consoleDisplay.js";
 export default class machine {
 
-	constructor() {
+	constructor(machineConsole) {
 		this.states = new Array();
         this.input = "";
         this.blank = '';
@@ -12,6 +13,12 @@ export default class machine {
 		this.result = "";
 		this.currentState = "";
 		this.playback;
+		this.lastStateTransitionedTo = "";
+		this.stateStuckIn = "";
+		this.HelpImStuckInAStateThatDoesNotExist = false;
+
+		this.machineConsole = machineConsole;
+
 		document.getElementById('step').addEventListener('click', () => this.findTransition());
 		document.getElementById('play').addEventListener('click', () => this.playMachine());
 		document.getElementById('pause').addEventListener('click', () => this.stopTheBus());
@@ -22,7 +29,6 @@ export default class machine {
 
 	createMachine(input, blank, start, accept, states_Set)
 	{
-		console.log(input, blank, start, accept, states_Set);
 		this.states = new Array();
         this.input = input.slice(0);
         this.blank = blank;
@@ -30,11 +36,27 @@ export default class machine {
         this.accept = accept;
         this.numStates = states_Set.length;
 		this.result = input;
+		this.lastStateTransitionedTo = "";
+		this.HelpImStuckInAStateThatDoesNotExist = false;
         for(let i = 0; i < this.numStates;i++)
         {
             this.states[i] = new Array(states_Set[i][0], states_Set[i][1], states_Set[i][2]);
         }
 		this.currentState = this.findState(this.start);
+	}
+
+	editMachine(states_Set)
+	{
+		this.states = new Array();
+		this.numStates = states_Set.length;
+		this.lastStateTransitionedTo = "";
+		this.HelpImStuckInAStateThatDoesNotExist = false;
+
+		for(let i = 0; i < this.numStates;i++)
+        {
+            this.states[i] = new Array(states_Set[i][0], states_Set[i][1], states_Set[i][2]);
+        }
+		this.currentState = this.findState(this.currentState[0]);
 	}
 	
 	getStates() { //these three mostly for canvas
@@ -71,47 +93,45 @@ export default class machine {
 		let currentState = this.currentState;
 
 		let error = 0;
-
-		if(currentState[STATENAME] != this.accept && error >= 0)//error checking is NOT done, W.I.P. for now please only use machines that should work
+		if(this.HelpImStuckInAStateThatDoesNotExist)
+		{
+			this.machineConsole.machineIsStuckInAStateThatDoesNotExist(this.stateStuckIn, this.lastStateTransitionedTo);
+		}
+		else if(currentState[STATENAME] != this.accept && error >= 0)
 		{
 			for(let i = 0; i < currentState[POTENTIALREADS].length; i++)
 			{
 				if(currentState[POTENTIALREADS][i].includes(currentRead)){//proceed with the parallel transition steps
-					console.log("about to transition");
 					this.performTransition(currentState[TRANSITIONSTEPS][i], this.result);
 					i=currentState[POTENTIALREADS].length +1;
 				}
 
 
 				else if(i == currentState[POTENTIALREADS].length - 1){//if the state does not recognise the character
-					error = -4000;//edit error please
-					console.log("cannot transition:" + currentRead);}
+					
+					this.machineConsole.stateHasNoAvailableTransitions(this.stateStuckIn, currentRead);
+				}
+				
 			}
 		}
 
 		if(currentState[STATENAME] == this.accept)//is the machine done?
 		{
-			console.log("fin");
 			clearInterval(this.playback);
 		}
 		
 	}
 
-	performTransition(transitionSteps, readString)
+	performTransition(transitionSteps)
 	{
+		let validNextState = -1;
 		let writeChar = "";
 		let direction = "";
 		let nextState = "";
-		if(transitionSteps.indexOf("\n") == transitionSteps.lastIndexOf("\n"))//then you have an action set of just a direction and a nextState
-		{
-			direction = transitionSteps[0];
-			nextState = transitionSteps.substr(2);
-		}
-		else {
+
 			writeChar = transitionSteps[0];
 			direction = transitionSteps[2];
 			nextState = transitionSteps.substr(4);
-		}
 
 		updateCell(writeChar);
 
@@ -123,7 +143,18 @@ export default class machine {
 		{
 			moveLeft();
 		}
-		this.currentState = this.findState(nextState);
+		validNextState = this.findState(nextState);
+		if(validNextState != -1)
+		{
+			this.currentState = validNextState;
+			this.HelpImStuckInAStateThatDoesNotExist = false;
+		}
+		else{
+			this.HelpImStuckInAStateThatDoesNotExist = true;
+			this.lastStateTransitionedTo = this.currentState[0];
+			this.stateStuckIn = nextState;
+			this.currentState[0] = nextState;
+		}
 	}
 
 	findState(stateName)

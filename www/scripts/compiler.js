@@ -36,9 +36,17 @@ export default class compiler {
 
         this.userCode = undefined;
         this.loadCode = undefined;
+
+        this.editRunning = false;
         document.getElementById('load').addEventListener('click', () => this.loadCode());
+        document.getElementById('edit_current_machine').addEventListener('click', () => this.setEditFlagAndCompile());
     }
 	
+    setEditFlagAndCompile(){
+        this.editRunning = true;
+        document.getElementById('load').click();
+        this.editRunning = false;
+    }
     scanTokens() //looking for tokens
     {
         let code = this.userCode.toLowerCase();
@@ -68,6 +76,10 @@ export default class compiler {
                     do{
                         index++;
                     }while(index < code.length && code[index] != '\n');
+                    if(code[index] == '\n')
+                    {
+                        this.lineNumber++;
+                    }
                 }
                 else
                 {
@@ -123,6 +135,10 @@ export default class compiler {
                     numTokens++;
                     tempToken = "";
                     activeToken = false;
+                }
+                if(code[index] == '\n')
+                {
+                    this.lineNumber++;
                 }
             }
 			
@@ -186,7 +202,7 @@ export default class compiler {
                     stopParse = this.match_Blank(index);
                     if(!stopParse)
                     {
-                        console.log("blank");
+                        //console.log("blank");
                         index+=3;
                     }
                     break;
@@ -229,7 +245,7 @@ export default class compiler {
                                 else{
                                     this.errorCode = tempErrorCode;
                                     stopParse = true;
-                                    console.log("expected action set");
+                                    //console.log("expected action set");
                                 }
 
                             }
@@ -261,7 +277,7 @@ export default class compiler {
                     else
                     {
                         this.errorCode = tempErrorCode;
-                        console.log("expected alphanumeric statename");
+                        //console.log("expected alphanumeric statename");
                         stopParse = true;
                     }
                     break;
@@ -297,7 +313,7 @@ export default class compiler {
         }
         else if(!this.checkExistingStartState())
         {
-            console.log("no start good");
+            //console.log("no start good");
             stopParse = true;
             tempErrorCode = -5554;
         }
@@ -311,11 +327,18 @@ export default class compiler {
         {
 			if(this.states_Set[0] != null)
 			{
-                console.log(this.tempInputString);
-				updateTape(this.tempInputString, this.tempBlankString);
-				turingMachine.createMachine(this.tempInputString, this.tempBlankString,this.tempStartStateString, this.tempAcceptStateString, this.states_Set);                
-                this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
-				this.states_Set = new Array();
+                    if(this.editRunning && this.checkEdited(turingMachine))
+                    {
+                        turingMachine.editMachine(this.states_Set);
+                        console.log(turingMachine);
+                    }
+                    else{
+                        updateTape(this.tempInputString, this.tempBlankString);
+                        turingMachine.createMachine(this.tempInputString, this.tempBlankString,this.tempStartStateString, this.tempAcceptStateString, this.states_Set); 
+                        console.log(turingMachine);               
+                    }
+                    this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
+                    this.states_Set = new Array();
 			}
 			else{this.errorCode = -204;}//no states defined
 		}
@@ -329,7 +352,7 @@ export default class compiler {
         let exists = false;
         while( i < this.states_Set.length && !exists)
         {
-            console.log(`${this.states_Set[i][0]}:${this.tempStartStateString}`);
+            //console.log(`${this.states_Set[i][0]}:${this.tempStartStateString}`);
             if(this.states_Set[i][0] == this.tempStartStateString)
                 exists = true;
             i++;
@@ -504,5 +527,43 @@ export default class compiler {
             //this.setErrorContext();
         }
         return returnVal;
+    }
+
+
+
+
+
+
+
+
+
+    checkEdited(tm)
+    {
+        let retVal = false;
+
+        if(tm.input == this.tempInputString && tm.blank == this.tempBlankString && tm.start == this.tempStartStateString && tm.accept == this.tempAcceptStateString)
+        {
+            let i = 0;
+            let currentStateStillExists = false;
+            while(i < this.states_Set.length && !currentStateStillExists)
+            {
+                console.log(this.states_Set[i][0]);
+                if(tm.currentState[0] == this.states_Set[i][0] || tm.stateStuckIn == this.states_Set[i][0])
+                {
+                    currentStateStillExists = true;
+                    retVal = true;
+
+                    console.log("good to go");
+                }
+                i++;
+            }
+            if(!currentStateStillExists)
+            console.log("current state did not exist, restarting machine");
+        }
+        else{
+            console.log("you edited essential machine parts, restarting machine");
+        }
+
+        return retVal;
     }
 }//end of class
