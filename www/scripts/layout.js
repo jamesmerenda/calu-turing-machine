@@ -77,15 +77,6 @@ export default class layout{
                 this.toggleMachine();
             });
 
-        document.getElementById('toggle_layout').addEventListener('click', (event) => {
-            const isButton = event.target.nodeName === 'BUTTON';
-            if (!isButton) {
-                return;
-            }
-            //function to run on click
-                this.toggleLayout();
-            });
-
     }
 
     onLoadClick(){
@@ -165,9 +156,4 @@ export default class layout{
             this.machineShown = !this.machineShown;
         }
     }
-
-    toggleLayout() {
-        //nothing yet
-    }
-
 }

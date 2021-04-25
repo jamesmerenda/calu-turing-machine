@@ -230,8 +230,82 @@ accept = qf;
 	" " [" ", r, qf];
 
 -qf;`
-]
+],
+[
+'x-y, where x is greater than y',
+`# x-y, where x is greater than y - accepts two strings of 1s separated by a
+                                   0 and outputs the difference of x and y.
+# Input -  two strings of 1s separated by a 0.
+# Output - the difference between x and y.
 
+input = "1111011";
+blank = " ";
+start = q0;
+accept = qf;
+
+-q0 1   [1, r, q0]
+    0   [0, r, q0]
+    " " [" ", l, q1];
+
+-q1 1 [" ", l, q2]
+    0 [" ", l, q4];
+
+-q2 1 [1, l, q2]
+    0 [0, l, q3];
+
+-q3 1 [0, r, q0]
+    0 [0, l, q3];
+
+-q4 0   [" ", l, q4]
+    1   [1, l, q4]
+    " " [" ", r, qf];
+
+-qf;`
+],
+[
+'wcw, where w is an element of {a,b}*',
+`# wcw, where w is an element of {a,b}* - accepts two strings of a combination of
+                                         a's and b's in the same order separated
+                                         by a c.
+# Input -  two strings of 1s separated by a 0.
+# Output - if each side matches, an equal amount of y's on each side of a c.
+
+input = "aabcaab";
+blank = " ";
+start = q0;
+accept = qf;
+
+-q0 a [x, r, q1]
+	b [x, r, q2]
+	c [c, r, q6];
+
+-q1 a [a, r, q1]
+	b [b, r, q1]
+	c [c, r, q3];
+
+-q2 a [a, r, q2]
+	b [b, r, q2]
+	c [c, r, q4];
+
+-q3 a [y, l, q5]
+	y [y, r, q3];
+
+-q4 b [y, l, q5]
+	y [y, r, q4];
+
+-q5 c [c, l, q5]
+	b [b, l, q5]
+	a [a, l, q5]
+	x [x, r, q0]
+	y [y, l, q5];
+
+-q6 y [y, r, q6]
+	" " [" ", l, qf];
+
+-qf;
+
+`
+]
 ];
 
 var cWindow = document.getElementById('consoleText');
@@ -256,7 +330,7 @@ document.getElementById('selection_list').addEventListener('mouseleave', functio
 //retrieve clicked program option and load related program
 document.querySelectorAll('#selection_option').forEach(item => {
 	item.addEventListener('click', event =>{
-		//console.log(item.innerHTML);
+		console.log(item.innerHTML);
 		let list = document.getElementById('selection_list');
 		let selectedProgram = item.innerHTML;
 		loadSelectedProgram(selectedProgram);

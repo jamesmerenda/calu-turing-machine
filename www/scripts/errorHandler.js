@@ -1,121 +1,124 @@
 import consoleDisplay from "./consoleDisplay.js";
 
-export default class errorHandler {
+export default class errorHandler { //prints errors, wowee
 	
 	constructor() {
 		this.display = new consoleDisplay();
 		this.errorLineNumber = -1;
 		//double check this is correct
-		
-		/*
-		this.errorCode = undefined;
-		this.errorState = undefined;
-		this.errorSymbol = undefined;
-		*/
 	}
 	
-	getErrorCode() {
-        return this.errorCode;
-    }
-
-    getErrorState() {
-        return this.errorState;
-    }
-
-    getErrorSymbol() {
-        return this.errorSymbol;
-    }
-	
-	setErrorContext() {
-        this.errorCode = this.tempErrorCode;
-        this.errorState = this.tempStateName;
-        this.errorSymbol = this.tempPotentialReadsString;
-    }
-	
-	getErrorContext() {
-        return new Array(this.errorState, this.errorSymbol);
-    }
-	
-	//general print to console right now, can be edited to include specific details later
-	printBadEOF() {
+	printBadEOF(lineNumber) {
 		//-100
-		this.display.setValue("Expected end of quotes but reached end of file");
+		this.display.clearConsole();
+		this.display.setValue("Expected end of quotes but reached end of file on line", lineNumber);
 	}
 	
 	printBadInput() {
 		//-200, double check if needed
+		this.display.clearConsole();
 		this.display.setValue("No input defined");
 	}
 
 	printBadBlank() {
 		//-201
+		this.display.clearConsole();
 		this.display.setValue("No blank character defined");
 	}
 
 	printBadStart() {
 		//-202
+		this.display.clearConsole();
 		this.display.setValue("No start state defined");
 	}	
 	
 	printBadAccept() {
 		//-203
+		this.display.clearConsole();
 		this.display.setValue("No accept state defined");
 	}		
 	
 	printBadStates() {
 		//-204
+		this.display.clearConsole();
 		this.display.setValue("No states were defined for the machine");
 	}
 
-	printBadInputDef() {
+	printBadInputDef(lineNum) {
 		//-205
-		this.display.setValue("Could not find input definition after identifier");
+		this.display.clearConsole();
+		this.display.setValue(`Input was not properly defined on line ${lineNum}\n`);
 	}	
 	
-	printBadBlankDef() {
+	printBadBlankDef(lineNum) {
 		//-206
-		this.display.setValue("Could not find blank definition after identifier");
+		this.display.clearConsole();
+		this.display.setValue(`Blank was not properly defined on line ${lineNum}\n`);
 	}		
 	
-	printBadStateDef() {
+	printBadStateDef(lineNum) {
 		//-207
-		this.display.setValue("Could not find state definition after identifier");
+		this.display.clearConsole();
+		this.display.setValue(`State was not properly defined on line ${lineNum}\n`);
 	}
 	
-	printBadStateName() {
+	printBadStateName(tokArr) {
 		//-208
-		this.display.setValue("Expected an alphanumeric state name");
+		this.display.clearConsole();
+		this.display.setValue(`State name cannot contain whitespace characters
+		Inputted state name: ${tokArr[0]}
+		Line number: ${tokArr[1]}\n`);
 	}
 	
-	printBadEOL() {
+	printBadEOL(lineNumber) {
 		//-220
-		this.display.setValue("Expected end of quotes before new line");
+		this.display.clearConsole();
+		this.display.setValue(`Expected end of quotes before new line on line ${lineNumber}\n`);
 	}
 	
-	printBadStateRead(errorContext) { //template literals start here
+	printBadStateRead(tokArr) { 
 		//-209
-		this.display.setValue(`Expected list of potential reads for state: ${errorContext}`);
+		this.display.clearConsole();
+		this.display.setValue(`Expected list of potential reads for state ${tokArr[0]} on line ${tokArr[1]}\n`);
+	}
+	
+	printNoBracket(lineNum) { //210
+		this.display.clearConsole();
+		this.display.setValue(`Missing opening bracket for action set on line ${lineNum}\n`);
 	}
 
 	printBadStateSyntax(stateContext, symbolContext) { //don't need \n with template literals
+		this.display.clearConsole();
 		this.display.setValue(`Potentially incorrect syntax for action set.
 		State: ${stateContext}
 		Symbols: ${symbolContext}
-		Expected: [char, (l|r), state name]`);
+		Expected: [char, (l|r), state name]\n`);
+	}
+		
+	printBadWriteAction(tokArr, comma)	{ //21l
+		this.display.clearConsole();
+		this.display.setValue(`Expected a valid write action and a comma on line ${tokArr[1]}
+		Write action: ${tokArr[0]}
+		Comma: ${comma}\n`)
+	}
+		
+	printBadNextStateAction(tokArr, bracket) { //212
+		this.display.clearConsole();
+		this.display.setValue(`Expected a valid state name and a closing bracket on line ${tokArr[1]}
+		State name: ${tokArr[0]}
+		Bracket: ${bracket}\n`);
+	}
+	
+	printBadDirection(tokArr) { //213
+		this.display.clearConsole();
+		this.display.setValue(`Expected a singular r or l on line ${tokArr[1]}
+		Current token: ${tokArr[0]}\n`);
 	}
 
-	/* rewrite once i figure out context
-	case -211:
-		this.console.value = `Error Code: ${errorCode}\n`;
-		break;
-	case -212:
-		this.console.value = `Error Code: ${errorCode}\n`;
-		break;
-	case -213:
-		this.console.value = `Error Code: ${errorCode}\n`;
-		break;
-	case -214:
-		this.console.value = `Error Code: ${errorCode}\n`;
-		break;
-	*/
+	printBadStartLine(tokArr) { //214
+		this.display.clearConsole();
+		this.display.setValue(`Current token on line ${tokArr[1]} is not a valid line start
+		Current token: ${tokArr[0]}
+		Expected: input, blank, start, accept or -\n`);
+	}	
 }
