@@ -17,6 +17,7 @@ export default class machine {
 		document.getElementById('pause').addEventListener('click', () => this.stopTheBus());
 		document.getElementById('reset').addEventListener('click', function(){
 			document.getElementById('load').click();
+			//if reset button is clicked, simulate a click on the load button
 		});
 	}
 
@@ -36,7 +37,7 @@ export default class machine {
         }
 		this.currentState = this.findState(this.start);
 	}
-		//if reset button is clicked, simulate a click on the load button
+		
 	/*
 	deletePrevious(machine) {
 		document.getElementById('step').removeEventListener('click', this.findTransition());
