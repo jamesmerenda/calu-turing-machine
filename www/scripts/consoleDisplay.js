@@ -21,10 +21,17 @@ export default class consoleDisplay {
 	
 	setValue(value) {
 		this.console.value += value;
+		this.console.value = value;
 	}
 
     displayMachine(machine) 
-    {
+    {	
+        this.console.value =`Successful Machine Build!\n\n`;
+        this.console.value +=`input:\t\t\t\"${machine.input}\"\n`;
+        this.console.value +=`blank character:\t\"${machine.blank}\"\n`;
+        this.console.value +=`starting state:\t\t${machine.start}\n`;
+        this.console.value +=`accepting state:\t${machine.accept}\n\n`;
+
         this.console.value =`Successful Machine Build!
 		i: ${machine.input}
 		b: "${machine.blank}"

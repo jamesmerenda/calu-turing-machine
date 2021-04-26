@@ -299,38 +299,40 @@ export default class compiler {
             }
             index++;
         }
-
-        if(this.tempInputString == "")
-        {
-            stopParse = true;
-            tempErrorCode = -5550;
-        }
-        else if(this.tempBlankString == "")
-        {
-            stopParse = true;
-            tempErrorCode = -5551;
-        }
-        else if(this.tempStartStateString == "")
-        {
-            stopParse = true;
-            tempErrorCode = -5552;
-        }
-        else if(this.tempAcceptStateString == "")
-        {
-            stopParse = true;
-            tempErrorCode = -5553;
-        }
-        else if(!this.checkExistingStartState())
-        {
-            //console.log("no start good");
-            stopParse = true;
-            tempErrorCode = -5554;
-        }
-        else if(!this.checkExistingAcceptState())
-        {
-            stopParse = true;
-            tempErrorCode = -5555;
-        }
+		
+		if(!stopParse) { //don't need to check these if it already failed
+			if(this.tempInputString == "")
+			{
+				stopParse = true;
+				this.errorHandler.printBadInput();
+			}
+			else if(this.tempBlankString == "")
+			{
+				stopParse = true;
+				this.errorHandler.printBadBlank();
+			}
+			else if(this.tempStartStateString == "")
+			{
+				stopParse = true;
+				this.errorHandler.printBadStart();
+			}
+			else if(this.tempAcceptStateString == "")
+			{
+				stopParse = true;
+				this.errorHandler.printBadAccept();
+			}
+			else if(!this.checkExistingStartState())
+			{
+				//console.log("no start good");
+				stopParse = true;
+				this.errorHandler.printBadStartDef();
+			}
+			else if(!this.checkExistingAcceptState())
+			{
+				stopParse = true;
+				 this.errorHandler.printBadAcceptDef();
+			}
+		}
 
         if(!stopParse) //sanity check this
         {
@@ -349,10 +351,12 @@ export default class compiler {
                     this.tempInputString=this.tempBlankString=this.tempStartStateString=this.tempAcceptStateString = "";
                     this.states_Set = new Array();
 			}
-			else{this.errorCode = -204;}//no states defined
+			else{stopParse = true;}//no states defined
 		}
-
-        return tempErrorCode;
+		
+		//1 is true, 0 is false
+		
+        return stopParse;
     }
 
     checkExistingStartState()

@@ -106,13 +106,11 @@ export default class machine {
 					this.performTransition(currentState[TRANSITIONSTEPS][i], this.result);
 					i=currentState[POTENTIALREADS].length +1;
 				}
-
-
 				else if(i == currentState[POTENTIALREADS].length - 1){//if the state does not recognise the character
-					
+					//this.errorHandler.printInvalidCharacter();
+					console.log("cannot transition:" + currentRead);
 					this.machineConsole.stateHasNoAvailableTransitions(this.stateStuckIn, currentRead);
 				}
-				
 			}
 		}
 

@@ -24,9 +24,8 @@ markupCompiler.loadCode = function () {
 		console.log("compiler failed");
     }
 
-    if(appError < 0){ //should probably have a generic error here since it should have already thrown errors
+    if(appError){ //should probably have a generic error here since it should have already thrown errors
         console.log(appError);
-        machineConsole.displayErrorTemp(appError);
     }
     else
     {

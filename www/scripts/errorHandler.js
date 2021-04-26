@@ -4,7 +4,6 @@ export default class errorHandler { //prints errors, wowee
 	
 	constructor() {
 		this.display = new consoleDisplay();
-		this.errorLineNumber = -1;
 		//double check this is correct
 	}
 	
