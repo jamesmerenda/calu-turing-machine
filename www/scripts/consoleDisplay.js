@@ -20,7 +20,6 @@ export default class consoleDisplay {
     }
 	
 	setValue(value) {
-		this.console.value += value;
 		this.console.value = value;
 	}
 
