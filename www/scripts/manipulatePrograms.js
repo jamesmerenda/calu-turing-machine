@@ -163,7 +163,8 @@ accept = qf;
 'Binary Pong',
 
 `# Binary Pong - the read head bounces back and forth.
-# Input - a binary digit and another binary digit separated by a space.
+# Input - a binary digit and another binary digit separated by
+#         a space.
 # Output - a really intense game of table tennis.
 
 input = "0 1";
@@ -213,7 +214,8 @@ accept = never;
 [
 'Binary Complement',
 
-`# Binary Complement - accepts a binary number and outputs the complement of it.
+`# Binary Complement - accepts a binary number and outputs the 
+#                     complement of it.
 # Input - a binary number.
 # Output - the binary complement of the input.
 
@@ -233,8 +235,9 @@ accept = qf;
 ],
 [
 'x-y, where x is greater than y',
-`# x-y, where x is greater than y - accepts two strings of 1s separated by a
-                                   0 and outputs the difference of x and y.
+`# x-y, where x is greater than y - 
+#      accepts two strings of 1s separated by a
+#      0 and outputs the difference of x and y.
 # Input -  two strings of 1s separated by a 0.
 # Output - the difference between x and y.
 
@@ -264,9 +267,10 @@ accept = qf;
 ],
 [
 'wcw, where w is an element of {a,b}*',
-`# wcw, where w is an element of {a,b}* - accepts two strings of a combination of
-                                         a's and b's in the same order separated
-                                         by a c.
+`# wcw, where w is an element of {a,b}* - 
+#       accepts two strings of a combination of
+#       a's and b's in the same order separated
+#       by a c.
 # Input -  two strings of 1s separated by a 0.
 # Output - if each side matches, an equal amount of y's on each side of a c.
 
