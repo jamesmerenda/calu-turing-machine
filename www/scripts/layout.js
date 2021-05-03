@@ -1,14 +1,15 @@
 export default class layout{
     constructor()
     {
-
         this.codeArea = document.getElementById('code-area');
         this.lineNumbers = document.getElementById('line-numbers');
-        var lineCount = 1;
+        this.lineCount = 1;
         this.consoleShown = 1;
         this.editorShown = 1;
         this.machineShown = 1;
         this.layout = 1;
+		
+		this.updateLineNumbers(); //in case there's code already loaded into machine, ie on refresh
 
         //initializes functions so they can be defined in main/index.js
 
@@ -24,20 +25,7 @@ export default class layout{
         
         if the number of lines changes in code-area, then the number of lines shown in line-numbers will be synced
         */
-        document.getElementById('code-area').addEventListener('input', (event) => {
-            
-            var linesActual = this.countLines();
-            //function to run on input
-                if(linesActual != lineCount)
-                {
-                    lineCount = linesActual;
-                    this.lineNumbers.value = "";
-                    for(let i = 1;i <= lineCount;i++)
-                    {
-                        this.lineNumbers.value += i +"\n";
-                    }
-                }
-            });
+        document.getElementById('code-area').addEventListener('input', () => this.updateLineNumbers());
 
         //adds click event listener to the reset button
         document.getElementById('select').addEventListener('click', (event) => {
@@ -78,6 +66,20 @@ export default class layout{
             });
 
     }
+	
+	updateLineNumbers() { //updates editor line numbers
+		let linesActual = this.countLines();
+		//function to run on input
+			if(linesActual != this.lineCount)
+			{
+				this.lineCount = linesActual;
+				this.lineNumbers.value = "";
+				for(let i = 1;i <= this.lineCount;i++)
+				{
+					this.lineNumbers.value += i +"\n";
+				}
+			}
+	}
 
     onLoadClick(){
         console.log(document.getElementById("code-area").value);
