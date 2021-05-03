@@ -3,14 +3,14 @@ import compiler from "./compiler.js";
 import consoleDisplay from "./consoleDisplay.js";
 import machine from "./machine.js";
 
-let turingMachine = new machine();
+//let turingMachine = new machine();
 
 //window.machine = undefined;
 let machineLayout = new layout();
 let markupCompiler = new compiler();
 let machineConsole = new consoleDisplay();
 
-//let turingMachine = new machine(machineConsole);
+let turingMachine = new machine(machineConsole);
 
 var appError;//temporary fix
 
