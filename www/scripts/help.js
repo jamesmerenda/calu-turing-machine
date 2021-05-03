@@ -38,3 +38,19 @@ document.getElementById('help-console').addEventListener('click', (event) => {
 		document.getElementById('help-console').innerHTML = '&#x1F6C8;';
 	}
 });
+
+function helpMessage(){
+	document.getElementById('code-area').value += 
+	'# Welcome to the Virtualization of a Turing Machine website!\n\n' +
+	'# To get started, check out the pre-made machines in the\n' +
+	'# \"Select Pre-Made Machine\" menu or write your own here! \n' +
+	'# From there, click the Compile button then click Play in \n' +
+	'# the animation window on the right.\n\n' +
+	'# For details on each area of this page,\n' +
+	'# click the information button symbol located in the top \n' +
+	'# right of each window for explanations on controls and\n' +
+	'# other interactions.\n\n' +
+	'# For anything else, check the User\'s Manual in the\n' +
+	'# Documentation tab.'
+	;
+};

@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="css/style.css"/>
 	<link rel="stylesheet" href="css/machine.css"/>
 </head>
-<body>
+<body onload="helpMessage()">
 	<div class="wrapper">
 		<div class="main-wrapper">
 			<h2 style='user-select: none;'>Virtualization of a Turing Machine</h2>
@@ -57,9 +57,9 @@
 								<li><i><a class='help-link-behavior' href='#help-binary-complement'>Binary Complement</a></i></li>
 							</ul>
 							<hr>
-							<div id='help-legal-symbols'><i><b>Legal Symbols</b></i></div><br>
-								Legal symbols are defined by the <i>**</i> phrase. It is an extra security during compilation so foreign symbols are identified and alerted to the user when an illegal input symbol or transition symbol is detected.<br><br>The syntax is written as shown below:<br><br>
-								<i>** = "symbols";</i><br>
+							<div id='help-legal-symbols'><i><b>Comment Symbols</b></i></div><br>
+								Comments are defined by the <i>#</i>. It is a handy way to explain what each transition does as well as anything else someone would want to write. The comment extends until a new line is reached. The format is shown below:<br><br>
+								<i># My first comment!</i><br>
 							<hr>
 							<div id='help-blank-characters'><i><b>Blank Characters</b></i></div><br>
 								Blank characters are defined with the <i>blank</i> phrase. It is a value used to fill each cell in the Turing Machine tape with the user-defined blank character.<br><br>The syntax is written as shown below:<br><br><i>blank = "blankSymbol";</i><br>
